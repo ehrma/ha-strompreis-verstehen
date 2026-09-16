@@ -1,0 +1,38 @@
+find_cheapest_window:
+  fields:
+    config_entry:
+      selector:
+        config_entry:
+          integration: strompreis_verstehen
+    duration:
+      required: true
+      example: "03:00:00"
+      selector:
+        duration:
+    earliest_start:
+      example: "2026-09-17 18:00:00"
+      selector:
+        datetime:
+    latest_end:
+      example: "2026-09-18 07:00:00"
+      selector:
+        datetime:
+    price:
+      default: exchange
+      selector:
+        select:
+          translation_key: price
+          options:
+            - exchange
+            - my_price
+
+get_prices:
+  fields:
+    config_entry:
+      selector:
+        config_entry:
+          integration: strompreis_verstehen
+    date:
+      example: "2026-09-17"
+      selector:
+        date:

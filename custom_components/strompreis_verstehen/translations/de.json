@@ -1,0 +1,212 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Strompreis verstehen",
+        "description": "Börsenstrompreise für Deutschland mit Erklärung, warum der Preis gerade so ist. Die Daten sind öffentlich, ein Konto braucht es nicht. Den eigenen Tarif tragen Sie danach unter „Konfigurieren“ ein.",
+        "sections": {
+          "development": {
+            "name": "Entwicklung",
+            "description": "Nur ändern, wenn Sie eine eigene Kopie der API betreiben.",
+            "data": {
+              "api_url": "Server"
+            }
+          }
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Der Server von strompreis-verstehen.de ist nicht erreichbar."
+    },
+    "abort": {
+      "single_instance_allowed": "Strompreis verstehen ist schon eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Mein Tarif",
+        "description": "Damit „Mein Preis“ stimmt: Beim dynamischen Tarif ist der Aufschlag alles, was zum Börsenpreis dazukommt (Netzentgelt, Steuern, Umlagen, Anbieter), brutto. Beim Tarif mit festen Zeiten (HT/NT) ist es der Arbeitspreis außerhalb der Zeitfenster.",
+        "data": {
+          "kind": "Tarifart",
+          "base_ct": "Aufschlag bzw. Arbeitspreis",
+          "vat": "Mehrwertsteuer auf den Börsenpreis"
+        },
+        "data_description": {
+          "base_ct": "Brutto in ct/kWh. Die Grundgebühr gehört nicht dazu.",
+          "vat": "Nur beim dynamischen Tarif."
+        },
+        "sections": {
+          "time_windows": {
+            "name": "Zeitfenster",
+            "description": "Bis zu drei Zeiten mit eigenem Preis, z. B. ein Zeitfenster nach §14a (Modul 3) oder der Nachtstrom (NT). Von 22 bis 6 Uhr geht über Mitternacht.",
+            "data": {
+              "window_1_from": "Fenster 1 von",
+              "window_1_to": "Fenster 1 bis",
+              "window_1_ct": "Fenster 1 Preis",
+              "window_2_from": "Fenster 2 von",
+              "window_2_to": "Fenster 2 bis",
+              "window_2_ct": "Fenster 2 Preis",
+              "window_3_from": "Fenster 3 von",
+              "window_3_to": "Fenster 3 bis",
+              "window_3_ct": "Fenster 3 Preis"
+            }
+          }
+        }
+      }
+    },
+    "error": {
+      "window_incomplete": "Ein Zeitfenster mit Preis braucht „von“ und „bis“.",
+      "window_empty": "Bei einem Zeitfenster sind „von“ und „bis“ gleich."
+    }
+  },
+  "selector": {
+    "tariff_kind": {
+      "options": {
+        "dynamic": "Dynamischer Tarif (Börsenpreis + Aufschlag)",
+        "tou": "Feste Zeiten (HT/NT)"
+      }
+    },
+    "price": {
+      "options": {
+        "exchange": "Börsenpreis",
+        "my_price": "Mein Preis"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "exchange_price": {
+        "name": "Börsenpreis"
+      },
+      "my_price": {
+        "name": "Mein Preis"
+      },
+      "next_exchange_price": {
+        "name": "Börsenpreis nächste Viertelstunde"
+      },
+      "price_level": {
+        "name": "Preisstufe",
+        "state": {
+          "negativ": "negativ",
+          "sehr_guenstig": "sehr günstig",
+          "guenstig": "günstig",
+          "mittel": "mittel",
+          "teuer": "teuer",
+          "sehr_teuer": "sehr teuer"
+        }
+      },
+      "today_average": {
+        "name": "Heute Durchschnitt"
+      },
+      "today_min": {
+        "name": "Heute Tiefstpreis"
+      },
+      "today_max": {
+        "name": "Heute Höchstpreis"
+      },
+      "tomorrow_average": {
+        "name": "Morgen Durchschnitt"
+      },
+      "cheapest_window": {
+        "name": "Günstigste 3 Stunden"
+      },
+      "phase": {
+        "name": "Tagesphase"
+      },
+      "explanation": {
+        "name": "Erklärung"
+      },
+      "day_verdict": {
+        "name": "Tagesbild"
+      },
+      "price_setter": {
+        "name": "Preissetzer",
+        "state": {
+          "ueberschuss": "Überschuss",
+          "erneuerbare": "Erneuerbare",
+          "kohle": "Kohle",
+          "gas": "Gas",
+          "knappheit": "Knappheit",
+          "unklar": "unklar"
+        }
+      },
+      "renewable_share": {
+        "name": "Anteil Wind, Sonne, Bio"
+      },
+      "data_updated": {
+        "name": "Datenstand"
+      }
+    },
+    "binary_sensor": {
+      "negative_price": {
+        "name": "Negativer Preis"
+      },
+      "cheapest_window_active": {
+        "name": "In den günstigsten 3 Stunden"
+      },
+      "tomorrow_available": {
+        "name": "Preise für morgen da"
+      }
+    }
+  },
+  "exceptions": {
+    "api_error": {
+      "message": "strompreis-verstehen.de antwortet nicht: {error}"
+    },
+    "rate_limited": {
+      "message": "strompreis-verstehen.de bremst die Abfragen, neuer Versuch später."
+    },
+    "not_loaded": {
+      "message": "Strompreis verstehen ist nicht eingerichtet oder nicht geladen."
+    },
+    "end_before_start": {
+      "message": "Das Ende liegt vor dem frühesten Start."
+    },
+    "no_prices_for_date": {
+      "message": "Für {date} liegen keine Preise vor (verfügbar sind gestern, heute und morgen ab etwa 13 Uhr)."
+    }
+  },
+  "services": {
+    "find_cheapest_window": {
+      "name": "Günstigstes Zeitfenster finden",
+      "description": "Sucht die günstigste zusammenhängende Zeit der gewünschten Dauer in den bekannten Preisen (heute und, sobald veröffentlicht, morgen).",
+      "fields": {
+        "config_entry": {
+          "name": "Eintrag",
+          "description": "Nur nötig, wenn es mehrere gibt."
+        },
+        "duration": {
+          "name": "Dauer",
+          "description": "Wie lange das Gerät läuft, auf Viertelstunden aufgerundet."
+        },
+        "earliest_start": {
+          "name": "Frühester Start",
+          "description": "Ohne Angabe ab der laufenden Viertelstunde."
+        },
+        "latest_end": {
+          "name": "Spätestes Ende",
+          "description": "Ohne Angabe bis zum letzten bekannten Preis."
+        },
+        "price": {
+          "name": "Preis",
+          "description": "Börsenpreis oder Mein Preis mit dem eingetragenen Tarif."
+        }
+      }
+    },
+    "get_prices": {
+      "name": "Preise eines Tages",
+      "description": "Die Viertelstundenpreise von gestern, heute oder morgen.",
+      "fields": {
+        "config_entry": {
+          "name": "Eintrag",
+          "description": "Nur nötig, wenn es mehrere gibt."
+        },
+        "date": {
+          "name": "Tag",
+          "description": "Ohne Angabe heute."
+        }
+      }
+    }
+  }
+}

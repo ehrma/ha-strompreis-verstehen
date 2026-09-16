@@ -1,0 +1,50 @@
+{
+  "entity": {
+    "sensor": {
+      "exchange_price": { "default": "mdi:flash" },
+      "my_price": { "default": "mdi:cash" },
+      "next_exchange_price": { "default": "mdi:flash-outline" },
+      "price_level": {
+        "default": "mdi:gauge",
+        "state": {
+          "negativ": "mdi:gauge-empty",
+          "sehr_guenstig": "mdi:gauge-empty",
+          "guenstig": "mdi:gauge-low",
+          "mittel": "mdi:gauge",
+          "teuer": "mdi:gauge-full",
+          "sehr_teuer": "mdi:gauge-full"
+        }
+      },
+      "today_average": { "default": "mdi:approximately-equal" },
+      "today_min": { "default": "mdi:arrow-collapse-down" },
+      "today_max": { "default": "mdi:arrow-collapse-up" },
+      "tomorrow_average": { "default": "mdi:calendar-arrow-right" },
+      "cheapest_window": { "default": "mdi:timer-check-outline" },
+      "phase": { "default": "mdi:chart-timeline-variant" },
+      "explanation": { "default": "mdi:comment-text-outline" },
+      "day_verdict": { "default": "mdi:calendar-text" },
+      "price_setter": {
+        "default": "mdi:factory",
+        "state": {
+          "ueberschuss": "mdi:battery-arrow-up",
+          "erneuerbare": "mdi:wind-turbine",
+          "kohle": "mdi:factory",
+          "gas": "mdi:fire",
+          "knappheit": "mdi:alert-outline",
+          "unklar": "mdi:help-circle-outline"
+        }
+      },
+      "renewable_share": { "default": "mdi:leaf" },
+      "data_updated": { "default": "mdi:database-clock" }
+    },
+    "binary_sensor": {
+      "negative_price": { "default": "mdi:cash-minus" },
+      "cheapest_window_active": { "default": "mdi:timer-play-outline" },
+      "tomorrow_available": { "default": "mdi:calendar-check" }
+    }
+  },
+  "services": {
+    "find_cheapest_window": { "service": "mdi:timer-search-outline" },
+    "get_prices": { "service": "mdi:chart-bar" }
+  }
+}

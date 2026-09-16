@@ -1,0 +1,20 @@
+name: Release check
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag matches the manifest version and the cards are bundled
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version=$(python3 -c "import json; print(json.load(open('custom_components/strompreis_verstehen/manifest.json'))['version'])")
+          if [ "$tag" != "$version" ]; then
+            echo "Release tag $GITHUB_REF_NAME does not match manifest version $version" >&2
+            exit 1
+          fi
+          test -s custom_components/strompreis_verstehen/frontend/strompreis-cards.js

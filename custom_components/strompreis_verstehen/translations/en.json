@@ -1,0 +1,212 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Strompreis verstehen",
+        "description": "German day-ahead electricity prices with an explanation of why the price is what it is. The data is public, no account needed. Enter your own tariff afterwards under \"Configure\".",
+        "sections": {
+          "development": {
+            "name": "Development",
+            "description": "Only change this if you run your own copy of the API.",
+            "data": {
+              "api_url": "Server"
+            }
+          }
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "The strompreis-verstehen.de server cannot be reached."
+    },
+    "abort": {
+      "single_instance_allowed": "Strompreis verstehen is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "My tariff",
+        "description": "So that \"My price\" is right: for a dynamic tariff the surcharge is everything added to the exchange price (grid fee, taxes, levies, supplier), gross. For a time-of-use tariff (peak/off-peak) it is the energy price outside the time windows.",
+        "data": {
+          "kind": "Tariff type",
+          "base_ct": "Surcharge or energy price",
+          "vat": "VAT on the exchange price"
+        },
+        "data_description": {
+          "base_ct": "Gross, in ct/kWh. The monthly base fee is not included.",
+          "vat": "Dynamic tariff only."
+        },
+        "sections": {
+          "time_windows": {
+            "name": "Time windows",
+            "description": "Up to three periods with their own price, e.g. a §14a module 3 window or off-peak hours. 22 to 6 spans midnight.",
+            "data": {
+              "window_1_from": "Window 1 from",
+              "window_1_to": "Window 1 to",
+              "window_1_ct": "Window 1 price",
+              "window_2_from": "Window 2 from",
+              "window_2_to": "Window 2 to",
+              "window_2_ct": "Window 2 price",
+              "window_3_from": "Window 3 from",
+              "window_3_to": "Window 3 to",
+              "window_3_ct": "Window 3 price"
+            }
+          }
+        }
+      }
+    },
+    "error": {
+      "window_incomplete": "A time window with a price needs \"from\" and \"to\".",
+      "window_empty": "A time window has the same \"from\" and \"to\"."
+    }
+  },
+  "selector": {
+    "tariff_kind": {
+      "options": {
+        "dynamic": "Dynamic tariff (exchange price + surcharge)",
+        "tou": "Fixed periods (peak/off-peak)"
+      }
+    },
+    "price": {
+      "options": {
+        "exchange": "Exchange price",
+        "my_price": "My price"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "exchange_price": {
+        "name": "Exchange price"
+      },
+      "my_price": {
+        "name": "My price"
+      },
+      "next_exchange_price": {
+        "name": "Exchange price next quarter hour"
+      },
+      "price_level": {
+        "name": "Price level",
+        "state": {
+          "negativ": "negative",
+          "sehr_guenstig": "very cheap",
+          "guenstig": "cheap",
+          "mittel": "medium",
+          "teuer": "expensive",
+          "sehr_teuer": "very expensive"
+        }
+      },
+      "today_average": {
+        "name": "Today average"
+      },
+      "today_min": {
+        "name": "Today lowest price"
+      },
+      "today_max": {
+        "name": "Today highest price"
+      },
+      "tomorrow_average": {
+        "name": "Tomorrow average"
+      },
+      "cheapest_window": {
+        "name": "Cheapest 3 hours"
+      },
+      "phase": {
+        "name": "Day phase"
+      },
+      "explanation": {
+        "name": "Explanation"
+      },
+      "day_verdict": {
+        "name": "Day summary"
+      },
+      "price_setter": {
+        "name": "Price setter",
+        "state": {
+          "ueberschuss": "Surplus",
+          "erneuerbare": "Renewables",
+          "kohle": "Coal",
+          "gas": "Gas",
+          "knappheit": "Scarcity",
+          "unklar": "Unclear"
+        }
+      },
+      "renewable_share": {
+        "name": "Share of wind, solar, bio"
+      },
+      "data_updated": {
+        "name": "Data updated"
+      }
+    },
+    "binary_sensor": {
+      "negative_price": {
+        "name": "Negative price"
+      },
+      "cheapest_window_active": {
+        "name": "In the cheapest 3 hours"
+      },
+      "tomorrow_available": {
+        "name": "Tomorrow's prices available"
+      }
+    }
+  },
+  "exceptions": {
+    "api_error": {
+      "message": "strompreis-verstehen.de does not respond: {error}"
+    },
+    "rate_limited": {
+      "message": "strompreis-verstehen.de is rate limiting, retrying later."
+    },
+    "not_loaded": {
+      "message": "Strompreis verstehen is not set up or not loaded."
+    },
+    "end_before_start": {
+      "message": "The latest end is before the earliest start."
+    },
+    "no_prices_for_date": {
+      "message": "No prices for {date} (available: yesterday, today, and tomorrow from about 13:00)."
+    }
+  },
+  "services": {
+    "find_cheapest_window": {
+      "name": "Find cheapest window",
+      "description": "Finds the cheapest continuous period of the given duration in the known prices (today and, once published, tomorrow).",
+      "fields": {
+        "config_entry": {
+          "name": "Entry",
+          "description": "Only needed if there are several."
+        },
+        "duration": {
+          "name": "Duration",
+          "description": "How long the appliance runs, rounded up to quarter hours."
+        },
+        "earliest_start": {
+          "name": "Earliest start",
+          "description": "Defaults to the current quarter hour."
+        },
+        "latest_end": {
+          "name": "Latest end",
+          "description": "Defaults to the last known price."
+        },
+        "price": {
+          "name": "Price",
+          "description": "Exchange price or my price with the configured tariff."
+        }
+      }
+    },
+    "get_prices": {
+      "name": "Get prices of a day",
+      "description": "The quarter-hour prices of yesterday, today or tomorrow.",
+      "fields": {
+        "config_entry": {
+          "name": "Entry",
+          "description": "Only needed if there are several."
+        },
+        "date": {
+          "name": "Date",
+          "description": "Defaults to today."
+        }
+      }
+    }
+  }
+}

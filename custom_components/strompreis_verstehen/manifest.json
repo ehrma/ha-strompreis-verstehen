@@ -1,0 +1,14 @@
+{
+  "domain": "strompreis_verstehen",
+  "name": "Strompreis verstehen",
+  "codeowners": ["@ehrma"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http", "websocket_api"],
+  "documentation": "https://github.com/ehrma/ha-strompreis-verstehen",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/ehrma/ha-strompreis-verstehen/issues",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}
