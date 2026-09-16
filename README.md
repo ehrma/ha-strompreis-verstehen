@@ -6,6 +6,8 @@ Die Integration liefert Sensoren für Automationen (aktueller Preis, Preisstufe,
 
 English summary at the end.
 
+<img src="docs/images/day-card.png" alt="Karte Strompreis Tag: Tagesbild, Preisverlauf mit Phasen und Preisstreifen" width="520">
+
 ## Voraussetzungen
 
 Home Assistant 2026.3 oder neuer.
@@ -102,6 +104,8 @@ actions:
 
 Die Integration lädt ihre Karten selbst, eine zusätzliche Ressource ist nicht nötig. Nach der Installation oder einem Update einmal den Browser neu laden. Im Dashboard unter "Karte hinzufügen" nach "Strompreis" suchen.
 
+<img src="docs/images/now-card.png" alt="Karte Strompreis jetzt" width="400">
+
 Strompreis jetzt zeigt den Preis der laufenden Viertelstunde, die Preisstufe, den Rest des Tages als Streifen und die günstigsten drei Stunden ab jetzt.
 
 Strompreis Tag ist der obere Teil der Tagesseite der Website: das Tagesbild, der Preisverlauf mit Phasen und der Preisstreifen, umschaltbar zwischen gestern, heute und morgen sowie zwischen Stunden und Viertelstunden.
@@ -110,12 +114,18 @@ Strompreis Phasen, Strompreis Woher der Strom kommt und Strompreis Stunde im Det
 
 Strompreis Woche zeigt die letzten sieben Tage, heute und morgen, jeweils mit den günstigsten drei Stunden.
 
+<img src="docs/images/detail-cards.png" alt="Karten Phasen, Woher der Strom kommt, Stunde im Detail und Woche" width="520">
+
 Die Karten auf einem Dashboard hängen zusammen: Wer im Preisverlauf eine Stunde antippt, sieht sie auch in den Phasen, in der Erzeugung und im Stundendetail. Jede Karte kann Preise als Börsenpreis in ct/kWh, als eigenen Preis oder in €/MWh zeigen.
 
 ```yaml
 type: custom:strompreis-day-card
 unit: mein_preis
 ```
+
+Die Karten folgen dem hellen oder dunklen Design von Home Assistant. Hier die Tageskarte dunkel und mit dem eigenen Preis:
+
+<img src="docs/images/day-card-dark.png" alt="Karte Strompreis Tag im dunklen Design mit eigenem Preis" width="520">
 
 Die Karten sind derzeit nur auf Deutsch.
 

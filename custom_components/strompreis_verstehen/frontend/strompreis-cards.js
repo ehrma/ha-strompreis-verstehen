@@ -698,7 +698,7 @@ function gn(s, e, t = {}) {
     const D = v(p), E = D + 16, z = V(T, `▼ ${K(p / 10, 1)} ct · ${s[T].hour} Uhr`, E <= c.y + c.h - 2 ? E : D - 7);
     Math.abs(z.y - $.y) < 12 && Math.abs(z.x - $.x) < (z.text.length + $.text.length) * ct * 0.5 && (z.y = $.y + 13), I.push(z);
   }
-  const Pe = t.now && t.now.index >= 0 && t.now.index < h ? { x: c.x + (t.now.index + t.now.minute / 60) * u, label: t.now.label } : null;
+  const Pe = t.now && t.now.index >= 0 && t.now.index < h ? { x: c.x + (t.now.index + Math.min(1, Math.max(0, t.now.fraction))) * u, label: t.now.label } : null;
   return { width: n, height: o, plot: c, slotW: u, yOf: v, yTicks: P, xTicks: m, areaPath: R, linePath: A, zeroY: M < 0 ? v(0) : null, baselineY: N, slots: B, bands: j, labels: I, now: Pe, yMax: d, yMin: M };
 }
 function te(s) {
