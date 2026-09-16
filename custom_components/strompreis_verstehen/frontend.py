@@ -18,7 +18,8 @@ URL_BASE = f"/{DOMAIN}"
 async def async_register_cards(hass: HomeAssistant) -> None:
     """Once per Home Assistant start (async_setup), never per config entry: a path cannot be registered twice."""
     directory = Path(__file__).parent / "frontend"
-    if not (directory / CARDS_FILE).is_file():
+    # without the frontend (a headless setup, the test environment) there is no dashboard to load cards into
+    if "frontend" not in hass.config.components or not (directory / CARDS_FILE).is_file():
         return
     await hass.http.async_register_static_paths([StaticPathConfig(URL_BASE, str(directory), cache_headers=True)])
     # the version in the URL makes browsers fetch the new file after an update despite the cache headers

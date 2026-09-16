@@ -95,7 +95,8 @@ def test_cheapest_window_agrees_with_the_api() -> None:
             )
             assert found is not None
             assert found.start.isoformat().replace("+00:00", ".000Z") == expected["from"]
-            assert round(found.average, 1) == expected["avgEurMwh"]
+            # the API rounds with JavaScript's Math.round, which differs from round() on halves
+            assert abs(found.average - expected["avgEurMwh"]) <= 0.05 + 1e-9
 
 
 def test_cheapest_window_respects_bounds_and_gaps() -> None:
