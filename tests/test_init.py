@@ -2,15 +2,22 @@
 
 from __future__ import annotations
 
+from datetime import timedelta
+from unittest.mock import patch
+
+from freezegun.api import FrozenDateTimeFactory
+
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant
-from pytest_homeassistant_custom_component.common import MockConfigEntry
+from pytest_homeassistant_custom_component.common import MockConfigEntry, async_fire_time_changed
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 from pytest_homeassistant_custom_component.typing import WebSocketGenerator
 
 from custom_components.strompreis_verstehen.coordinator import poll_interval
 from custom_components.strompreis_verstehen.const import (
+    DAY_CHANGE_DELAY_MIN_S,
     UPDATE_INTERVAL,
+    UPDATE_INTERVAL_NEW_DAY,
     UPDATE_INTERVAL_WAITING_EXPLANATIONS,
     UPDATE_INTERVAL_WAITING_TOMORROW,
 )
@@ -52,6 +59,30 @@ def test_poll_faster_while_waiting() -> None:
     assert poll_interval(with_tomorrow, parse_ts("2026-09-15T11:00:00Z")) == UPDATE_INTERVAL
     no_explanations = HomeData.parse({**load_home(), "today": {**load_home()["today"], "hours": []}})
     assert poll_interval(no_explanations, parse_ts("2026-09-15T16:00:00Z")) == UPDATE_INTERVAL_WAITING_EXPLANATIONS
+    # 00:05 Berlin on the 16th, but the response is still the 15th (a cached copy): ask again soon
+    assert poll_interval(with_tomorrow, parse_ts("2026-09-15T22:05:00Z")) == UPDATE_INTERVAL_NEW_DAY
+
+
+async def test_new_day_is_fetched_after_a_delay(
+    hass: HomeAssistant, setup_integration: MockConfigEntry, mock_api: AiohttpClientMocker, freezer: FrozenDateTimeFactory
+) -> None:
+    # the regular 15-minute poll runs first, so the only poll due around midnight is the one for the new day
+    freezer.move_to("2026-09-15T21:59:00+00:00")
+    async_fire_time_changed(hass)
+    await hass.async_block_till_done()
+    calls = mock_api.call_count
+
+    delay = DAY_CHANGE_DELAY_MIN_S + 10
+    with patch("random.uniform", return_value=delay):
+        freezer.move_to("2026-09-15T22:00:00+00:00")  # midnight in Berlin
+        async_fire_time_changed(hass)
+        await hass.async_block_till_done()
+    assert mock_api.call_count == calls  # not in the same second as every other installation
+
+    freezer.tick(timedelta(seconds=delay + 1))
+    async_fire_time_changed(hass)
+    await hass.async_block_till_done()
+    assert mock_api.call_count == calls + 1
 
 
 async def test_card_subscription(

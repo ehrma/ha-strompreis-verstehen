@@ -37,6 +37,12 @@ UPDATE_INTERVAL: Final = timedelta(minutes=15)
 UPDATE_INTERVAL_WAITING_TOMORROW: Final = timedelta(minutes=3)
 # the explanations need actual generation data, which usually arrives around 18:00
 UPDATE_INTERVAL_WAITING_EXPLANATIONS: Final = timedelta(minutes=5)
+# a poll that still returned the previous day (a copy from the server's cache) is repeated soon, not in 15 minutes
+UPDATE_INTERVAL_NEW_DAY: Final = timedelta(minutes=1)
+# The server caches responses for 30 seconds, so a poll right at midnight can still get the previous day. The refresh
+# for the new day waits a random 35-95 seconds instead: past that cache, and not every installation in the same second.
+DAY_CHANGE_DELAY_MIN_S: Final = 35
+DAY_CHANGE_DELAY_MAX_S: Final = 95
 
 # Price level bands in EUR/MWh, upper bound exclusive (packages/core/src/day.ts)
 PRICE_LEVELS: Final[list[tuple[str, float]]] = [
