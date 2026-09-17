@@ -1,5 +1,5 @@
 const Se = globalThis, Ne = Se.ShadowRoot && (Se.ShadyCSS === void 0 || Se.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, Fe = /* @__PURE__ */ Symbol(), Ze = /* @__PURE__ */ new WeakMap();
-let $t = class {
+let wt = class {
   constructor(e, t, n) {
     if (this._$cssResult$ = !0, n !== Fe) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
     this.cssText = e, this.t = t;
@@ -17,14 +17,14 @@ let $t = class {
     return this.cssText;
   }
 };
-const Pt = (s) => new $t(typeof s == "string" ? s : s + "", void 0, Fe), ee = (s, ...e) => {
+const Ot = (s) => new wt(typeof s == "string" ? s : s + "", void 0, Fe), ee = (s, ...e) => {
   const t = s.length === 1 ? s[0] : e.reduce((n, o, r) => n + ((i) => {
     if (i._$cssResult$ === !0) return i.cssText;
     if (typeof i == "number") return i;
     throw Error("Value passed to 'css' function must be a 'css' function result: " + i + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
   })(o) + s[r + 1], s[0]);
-  return new $t(t, s, Fe);
-}, Tt = (s, e) => {
+  return new wt(t, s, Fe);
+}, Ut = (s, e) => {
   if (Ne) s.adoptedStyleSheets = e.map((t) => t instanceof CSSStyleSheet ? t : t.styleSheet);
   else for (const t of e) {
     const n = document.createElement("style"), o = Se.litNonce;
@@ -33,12 +33,12 @@ const Pt = (s) => new $t(typeof s == "string" ? s : s + "", void 0, Fe), ee = (s
 }, Ke = Ne ? (s) => s : (s) => s instanceof CSSStyleSheet ? ((e) => {
   let t = "";
   for (const n of e.cssRules) t += n.cssText;
-  return Pt(t);
+  return Ot(t);
 })(s) : s;
-const { is: zt, defineProperty: Ot, getOwnPropertyDescriptor: Ut, getOwnPropertyNames: Rt, getOwnPropertySymbols: Wt, getPrototypeOf: Lt } = Object, Ae = globalThis, Xe = Ae.trustedTypes, It = Xe ? Xe.emptyScript : "", Ht = Ae.reactiveElementPolyfillSupport, pe = (s, e) => s, Re = { toAttribute(s, e) {
+const { is: Rt, defineProperty: Wt, getOwnPropertyDescriptor: It, getOwnPropertyNames: Lt, getOwnPropertySymbols: Ht, getPrototypeOf: Nt } = Object, Ae = globalThis, Xe = Ae.trustedTypes, Ft = Xe ? Xe.emptyScript : "", Bt = Ae.reactiveElementPolyfillSupport, pe = (s, e) => s, Re = { toAttribute(s, e) {
   switch (e) {
     case Boolean:
-      s = s ? It : null;
+      s = s ? Ft : null;
       break;
     case Object:
     case Array:
@@ -63,7 +63,7 @@ const { is: zt, defineProperty: Ot, getOwnPropertyDescriptor: Ut, getOwnProperty
       }
   }
   return t;
-} }, wt = (s, e) => !zt(s, e), Ye = { attribute: !0, type: String, converter: Re, reflect: !1, useDefault: !1, hasChanged: wt };
+} }, xt = (s, e) => !Rt(s, e), Ye = { attribute: !0, type: String, converter: Re, reflect: !1, useDefault: !1, hasChanged: xt };
 Symbol.metadata ??= /* @__PURE__ */ Symbol("metadata"), Ae.litPropertyMetadata ??= /* @__PURE__ */ new WeakMap();
 let se = class extends HTMLElement {
   static addInitializer(e) {
@@ -75,11 +75,11 @@ let se = class extends HTMLElement {
   static createProperty(e, t = Ye) {
     if (t.state && (t.attribute = !1), this._$Ei(), this.prototype.hasOwnProperty(e) && ((t = Object.create(t)).wrapped = !0), this.elementProperties.set(e, t), !t.noAccessor) {
       const n = /* @__PURE__ */ Symbol(), o = this.getPropertyDescriptor(e, n, t);
-      o !== void 0 && Ot(this.prototype, e, o);
+      o !== void 0 && Wt(this.prototype, e, o);
     }
   }
   static getPropertyDescriptor(e, t, n) {
-    const { get: o, set: r } = Ut(this.prototype, e) ?? { get() {
+    const { get: o, set: r } = It(this.prototype, e) ?? { get() {
       return this[t];
     }, set(i) {
       this[t] = i;
@@ -94,13 +94,13 @@ let se = class extends HTMLElement {
   }
   static _$Ei() {
     if (this.hasOwnProperty(pe("elementProperties"))) return;
-    const e = Lt(this);
+    const e = Nt(this);
     e.finalize(), e.l !== void 0 && (this.l = [...e.l]), this.elementProperties = new Map(e.elementProperties);
   }
   static finalize() {
     if (this.hasOwnProperty(pe("finalized"))) return;
     if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(pe("properties"))) {
-      const t = this.properties, n = [...Rt(t), ...Wt(t)];
+      const t = this.properties, n = [...Lt(t), ...Ht(t)];
       for (const o of n) this.createProperty(o, t[o]);
     }
     const e = this[Symbol.metadata];
@@ -146,7 +146,7 @@ let se = class extends HTMLElement {
   }
   createRenderRoot() {
     const e = this.shadowRoot ?? this.attachShadow(this.constructor.shadowRootOptions);
-    return Tt(e, this.constructor.elementStyles), e;
+    return Ut(e, this.constructor.elementStyles), e;
   }
   connectedCallback() {
     this.renderRoot ??= this.createRenderRoot(), this.enableUpdating(!0), this._$EO?.forEach((e) => e.hostConnected?.());
@@ -178,7 +178,7 @@ let se = class extends HTMLElement {
   requestUpdate(e, t, n, o = !1, r) {
     if (e !== void 0) {
       const i = this.constructor;
-      if (o === !1 && (r = this[e]), n ??= i.getPropertyOptions(e), !((n.hasChanged ?? wt)(r, t) || n.useDefault && n.reflect && r === this._$Ej?.get(e) && !this.hasAttribute(i._$Eu(e, n)))) return;
+      if (o === !1 && (r = this[e]), n ??= i.getPropertyOptions(e), !((n.hasChanged ?? xt)(r, t) || n.useDefault && n.reflect && r === this._$Ej?.get(e) && !this.hasAttribute(i._$Eu(e, n)))) return;
       this.C(e, t, n);
     }
     this.isUpdatePending === !1 && (this._$ES = this._$EP());
@@ -246,51 +246,51 @@ let se = class extends HTMLElement {
   firstUpdated(e) {
   }
 };
-se.elementStyles = [], se.shadowRootOptions = { mode: "open" }, se[pe("elementProperties")] = /* @__PURE__ */ new Map(), se[pe("finalized")] = /* @__PURE__ */ new Map(), Ht?.({ ReactiveElement: se }), (Ae.reactiveElementVersions ??= []).push("2.1.2");
-const Be = globalThis, Qe = (s) => s, Ee = Be.trustedTypes, Je = Ee ? Ee.createPolicy("lit-html", { createHTML: (s) => s }) : void 0, xt = "$lit$", Z = `lit$${Math.random().toFixed(9).slice(2)}$`, yt = "?" + Z, Nt = `<${yt}>`, J = document, fe = () => J.createComment(""), me = (s) => s === null || typeof s != "object" && typeof s != "function", je = Array.isArray, Ft = (s) => je(s) || typeof s?.[Symbol.iterator] == "function", ze = `[ 	
+se.elementStyles = [], se.shadowRootOptions = { mode: "open" }, se[pe("elementProperties")] = /* @__PURE__ */ new Map(), se[pe("finalized")] = /* @__PURE__ */ new Map(), Bt?.({ ReactiveElement: se }), (Ae.reactiveElementVersions ??= []).push("2.1.2");
+const Be = globalThis, Qe = (s) => s, Ee = Be.trustedTypes, Je = Ee ? Ee.createPolicy("lit-html", { createHTML: (s) => s }) : void 0, yt = "$lit$", Z = `lit$${Math.random().toFixed(9).slice(2)}$`, bt = "?" + Z, jt = `<${bt}>`, J = document, fe = () => J.createComment(""), me = (s) => s === null || typeof s != "object" && typeof s != "function", je = Array.isArray, Gt = (s) => je(s) || typeof s?.[Symbol.iterator] == "function", ze = `[ 	
 \f\r]`, de = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, et = /-->/g, tt = />/g, Y = RegExp(`>|${ze}(?:([^\\s"'>=/]+)(${ze}*=${ze}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), nt = /'/g, st = /"/g, bt = /^(?:script|style|textarea|title)$/i, vt = (s) => (e, ...t) => ({ _$litType$: s, strings: e, values: t }), f = vt(1), S = vt(2), oe = /* @__PURE__ */ Symbol.for("lit-noChange"), g = /* @__PURE__ */ Symbol.for("lit-nothing"), rt = /* @__PURE__ */ new WeakMap(), Q = J.createTreeWalker(J, 129);
-function kt(s, e) {
+\f\r"'\`<>=]|("|')|))|$)`, "g"), nt = /'/g, st = /"/g, vt = /^(?:script|style|textarea|title)$/i, kt = (s) => (e, ...t) => ({ _$litType$: s, strings: e, values: t }), f = kt(1), S = kt(2), oe = /* @__PURE__ */ Symbol.for("lit-noChange"), g = /* @__PURE__ */ Symbol.for("lit-nothing"), rt = /* @__PURE__ */ new WeakMap(), Q = J.createTreeWalker(J, 129);
+function _t(s, e) {
   if (!je(s) || !s.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return Je !== void 0 ? Je.createHTML(e) : e;
 }
-const Bt = (s, e) => {
+const Vt = (s, e) => {
   const t = s.length - 1, n = [];
   let o, r = e === 2 ? "<svg>" : e === 3 ? "<math>" : "", i = de;
   for (let l = 0; l < t; l++) {
     const a = s[l];
-    let c, h, u = -1, w = 0;
-    for (; w < a.length && (i.lastIndex = w, h = i.exec(a), h !== null); ) w = i.lastIndex, i === de ? h[1] === "!--" ? i = et : h[1] !== void 0 ? i = tt : h[2] !== void 0 ? (bt.test(h[2]) && (o = RegExp("</" + h[2], "g")), i = Y) : h[3] !== void 0 && (i = Y) : i === Y ? h[0] === ">" ? (i = o ?? de, u = -1) : h[1] === void 0 ? u = -2 : (u = i.lastIndex - h[2].length, c = h[1], i = h[3] === void 0 ? Y : h[3] === '"' ? st : nt) : i === st || i === nt ? i = Y : i === et || i === tt ? i = de : (i = Y, o = void 0);
+    let c, h, u = -1, x = 0;
+    for (; x < a.length && (i.lastIndex = x, h = i.exec(a), h !== null); ) x = i.lastIndex, i === de ? h[1] === "!--" ? i = et : h[1] !== void 0 ? i = tt : h[2] !== void 0 ? (vt.test(h[2]) && (o = RegExp("</" + h[2], "g")), i = Y) : h[3] !== void 0 && (i = Y) : i === Y ? h[0] === ">" ? (i = o ?? de, u = -1) : h[1] === void 0 ? u = -2 : (u = i.lastIndex - h[2].length, c = h[1], i = h[3] === void 0 ? Y : h[3] === '"' ? st : nt) : i === st || i === nt ? i = Y : i === et || i === tt ? i = de : (i = Y, o = void 0);
     const y = i === Y && s[l + 1].startsWith("/>") ? " " : "";
-    r += i === de ? a + Nt : u >= 0 ? (n.push(c), a.slice(0, u) + xt + a.slice(u) + Z + y) : a + Z + (u === -2 ? l : y);
+    r += i === de ? a + jt : u >= 0 ? (n.push(c), a.slice(0, u) + yt + a.slice(u) + Z + y) : a + Z + (u === -2 ? l : y);
   }
-  return [kt(s, r + (s[t] || "<?>") + (e === 2 ? "</svg>" : e === 3 ? "</math>" : "")), n];
+  return [_t(s, r + (s[t] || "<?>") + (e === 2 ? "</svg>" : e === 3 ? "</math>" : "")), n];
 };
 class $e {
   constructor({ strings: e, _$litType$: t }, n) {
     let o;
     this.parts = [];
     let r = 0, i = 0;
-    const l = e.length - 1, a = this.parts, [c, h] = Bt(e, t);
+    const l = e.length - 1, a = this.parts, [c, h] = Vt(e, t);
     if (this.el = $e.createElement(c, n), Q.currentNode = this.el.content, t === 2 || t === 3) {
       const u = this.el.content.firstChild;
       u.replaceWith(...u.childNodes);
     }
     for (; (o = Q.nextNode()) !== null && a.length < l; ) {
       if (o.nodeType === 1) {
-        if (o.hasAttributes()) for (const u of o.getAttributeNames()) if (u.endsWith(xt)) {
-          const w = h[i++], y = o.getAttribute(u).split(Z), p = /([.?@])?(.*)/.exec(w);
-          a.push({ type: 1, index: r, name: p[2], strings: y, ctor: p[1] === "." ? Gt : p[1] === "?" ? Vt : p[1] === "@" ? qt : De }), o.removeAttribute(u);
+        if (o.hasAttributes()) for (const u of o.getAttributeNames()) if (u.endsWith(yt)) {
+          const x = h[i++], y = o.getAttribute(u).split(Z), p = /([.?@])?(.*)/.exec(x);
+          a.push({ type: 1, index: r, name: p[2], strings: y, ctor: p[1] === "." ? Zt : p[1] === "?" ? Kt : p[1] === "@" ? Xt : De }), o.removeAttribute(u);
         } else u.startsWith(Z) && (a.push({ type: 6, index: r }), o.removeAttribute(u));
-        if (bt.test(o.tagName)) {
-          const u = o.textContent.split(Z), w = u.length - 1;
-          if (w > 0) {
+        if (vt.test(o.tagName)) {
+          const u = o.textContent.split(Z), x = u.length - 1;
+          if (x > 0) {
             o.textContent = Ee ? Ee.emptyScript : "";
-            for (let y = 0; y < w; y++) o.append(u[y], fe()), Q.nextNode(), a.push({ type: 2, index: ++r });
-            o.append(u[w], fe());
+            for (let y = 0; y < x; y++) o.append(u[y], fe()), Q.nextNode(), a.push({ type: 2, index: ++r });
+            o.append(u[x], fe());
           }
         }
-      } else if (o.nodeType === 8) if (o.data === yt) a.push({ type: 2, index: r });
+      } else if (o.nodeType === 8) if (o.data === bt) a.push({ type: 2, index: r });
       else {
         let u = -1;
         for (; (u = o.data.indexOf(Z, u + 1)) !== -1; ) a.push({ type: 7, index: r }), u += Z.length - 1;
@@ -309,7 +309,7 @@ function ie(s, e, t = s, n) {
   const r = me(e) ? void 0 : e._$litDirective$;
   return o?.constructor !== r && (o?._$AO?.(!1), r === void 0 ? o = void 0 : (o = new r(s), o._$AT(s, t, n)), n !== void 0 ? (t._$Co ??= [])[n] = o : t._$Cl = o), o !== void 0 && (e = ie(s, o._$AS(s, e.values), o, n)), e;
 }
-class jt {
+class qt {
   constructor(e, t) {
     this._$AV = [], this._$AN = void 0, this._$AD = e, this._$AM = t;
   }
@@ -326,7 +326,7 @@ class jt {
     for (; a !== void 0; ) {
       if (i === a.index) {
         let c;
-        a.type === 2 ? c = new we(r, r.nextSibling, this, e) : a.type === 1 ? c = new a.ctor(r, a.name, a.strings, this, e) : a.type === 6 && (c = new Zt(r, this, e)), this._$AV.push(c), a = n[++l];
+        a.type === 2 ? c = new we(r, r.nextSibling, this, e) : a.type === 1 ? c = new a.ctor(r, a.name, a.strings, this, e) : a.type === 6 && (c = new Yt(r, this, e)), this._$AV.push(c), a = n[++l];
       }
       i !== a?.index && (r = Q.nextNode(), i++);
     }
@@ -356,7 +356,7 @@ class we {
     return this._$AB;
   }
   _$AI(e, t = this) {
-    e = ie(this, e, t), me(e) ? e === g || e == null || e === "" ? (this._$AH !== g && this._$AR(), this._$AH = g) : e !== this._$AH && e !== oe && this._(e) : e._$litType$ !== void 0 ? this.$(e) : e.nodeType !== void 0 ? this.T(e) : Ft(e) ? this.k(e) : this._(e);
+    e = ie(this, e, t), me(e) ? e === g || e == null || e === "" ? (this._$AH !== g && this._$AR(), this._$AH = g) : e !== this._$AH && e !== oe && this._(e) : e._$litType$ !== void 0 ? this.$(e) : e.nodeType !== void 0 ? this.T(e) : Gt(e) ? this.k(e) : this._(e);
   }
   O(e) {
     return this._$AA.parentNode.insertBefore(e, this._$AB);
@@ -368,10 +368,10 @@ class we {
     this._$AH !== g && me(this._$AH) ? this._$AA.nextSibling.data = e : this.T(J.createTextNode(e)), this._$AH = e;
   }
   $(e) {
-    const { values: t, _$litType$: n } = e, o = typeof n == "number" ? this._$AC(e) : (n.el === void 0 && (n.el = $e.createElement(kt(n.h, n.h[0]), this.options)), n);
+    const { values: t, _$litType$: n } = e, o = typeof n == "number" ? this._$AC(e) : (n.el === void 0 && (n.el = $e.createElement(_t(n.h, n.h[0]), this.options)), n);
     if (this._$AH?._$AD === o) this._$AH.p(t);
     else {
-      const r = new jt(o, this), i = r.u(this.options);
+      const r = new qt(o, this), i = r.u(this.options);
       r.p(t), this.T(i), this._$AH = r;
     }
   }
@@ -421,7 +421,7 @@ class De {
     e === g ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, e ?? "");
   }
 }
-class Gt extends De {
+class Zt extends De {
   constructor() {
     super(...arguments), this.type = 3;
   }
@@ -429,7 +429,7 @@ class Gt extends De {
     this.element[this.name] = e === g ? void 0 : e;
   }
 }
-class Vt extends De {
+class Kt extends De {
   constructor() {
     super(...arguments), this.type = 4;
   }
@@ -437,7 +437,7 @@ class Vt extends De {
     this.element.toggleAttribute(this.name, !!e && e !== g);
   }
 }
-class qt extends De {
+class Xt extends De {
   constructor(e, t, n, o, r) {
     super(e, t, n, o, r), this.type = 5;
   }
@@ -450,7 +450,7 @@ class qt extends De {
     typeof this._$AH == "function" ? this._$AH.call(this.options?.host ?? this.element, e) : this._$AH.handleEvent(e);
   }
 }
-class Zt {
+class Yt {
   constructor(e, t, n) {
     this.element = e, this.type = 6, this._$AN = void 0, this._$AM = t, this.options = n;
   }
@@ -461,9 +461,9 @@ class Zt {
     ie(this, e);
   }
 }
-const Kt = Be.litHtmlPolyfillSupport;
-Kt?.($e, we), (Be.litHtmlVersions ??= []).push("3.3.3");
-const Xt = (s, e, t) => {
+const Qt = Be.litHtmlPolyfillSupport;
+Qt?.($e, we), (Be.litHtmlVersions ??= []).push("3.3.3");
+const Jt = (s, e, t) => {
   const n = t?.renderBefore ?? e;
   let o = n._$litPart$;
   if (o === void 0) {
@@ -483,7 +483,7 @@ class ge extends se {
   }
   update(e) {
     const t = this.render();
-    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(e), this._$Do = Xt(t, this.renderRoot, this.renderOptions);
+    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(e), this._$Do = Jt(t, this.renderRoot, this.renderOptions);
   }
   connectedCallback() {
     super.connectedCallback(), this._$Do?.setConnected(!0);
@@ -496,10 +496,10 @@ class ge extends se {
   }
 }
 ge._$litElement$ = !0, ge.finalized = !0, Ge.litElementHydrateSupport?.({ LitElement: ge });
-const Yt = Ge.litElementPolyfillSupport;
-Yt?.({ LitElement: ge });
+const en = Ge.litElementPolyfillSupport;
+en?.({ LitElement: ge });
 (Ge.litElementVersions ??= []).push("4.2.2");
-const Qt = [
+const tn = [
   { key: "price", smardFilter: 4169, region: "DE-LU", unit: "EUR/MWh", label: "Day-Ahead-Preis DE/LU", kind: "price" },
   { key: "load", smardFilter: 410, region: "DE", unit: "MW", label: "Stromverbrauch (Netzlast)", kind: "actual", perControlZone: !0 },
   { key: "residual_load_smard", smardFilter: 4359, region: "DE", unit: "MW", label: "Residuallast (SMARD)", kind: "actual", schedule: "daily" },
@@ -526,15 +526,15 @@ const Qt = [
   { key: "forecast_wind_offshore", smardFilter: 3791, region: "DE", unit: "MW", label: "Prognose Wind auf See", kind: "forecast", perControlZone: !0, zoneSchedule: "daily" },
   { key: "forecast_solar", smardFilter: 125, region: "DE", unit: "MW", label: "Prognose Solar", kind: "forecast", perControlZone: !0, zoneSchedule: "daily" }
 ];
-Object.fromEntries(Qt.map((s) => [s.key, s]));
+Object.fromEntries(tn.map((s) => [s.key, s]));
 const le = "Europe/Berlin", ot = /* @__PURE__ */ new Map();
-function Jt(s, e = le) {
+function nn(s, e = le) {
   const t = e + JSON.stringify(s);
   let n = ot.get(t);
   return n || (n = new Intl.DateTimeFormat("de-DE", { timeZone: e, ...s }), ot.set(t, n)), n;
 }
-function _t(s, e = le) {
-  const t = Jt({
+function Mt(s, e = le) {
+  const t = nn({
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -552,49 +552,49 @@ function _t(s, e = le) {
     second: n("second")
   };
 }
-function en(s, e = le) {
-  const t = _t(s, e), n = Date.UTC(t.year, t.month - 1, t.day, t.hour, t.minute, t.second);
+function sn(s, e = le) {
+  const t = Mt(s, e), n = Date.UTC(t.year, t.month - 1, t.day, t.hour, t.minute, t.second);
   return Math.round((n - s.getTime()) / 6e4);
 }
 function xe(s, e = le) {
-  return _t(s, e).hour;
+  return Mt(s, e).hour;
 }
 function it(s, e = 0, t = 0, n = le) {
   const [o, r, i] = s.split("-").map(Number), l = Date.UTC(o, r - 1, i, e, t);
   let a = new Date(l);
   for (let c = 0; c < 2; c++) {
-    const h = en(a, n);
+    const h = sn(a, n);
     a = new Date(l - h * 6e4);
   }
   return a;
 }
-function Mt(s, e = le) {
-  const t = it(s, 0, 0, e), n = tn(s, 1);
+function St(s, e = le) {
+  const t = it(s, 0, 0, e), n = rn(s, 1);
   return { start: t, end: it(n, 0, 0, e) };
 }
-function tn(s, e) {
+function rn(s, e) {
   const [t, n, o] = s.split("-").map(Number);
   return new Date(Date.UTC(t, n - 1, o + e)).toISOString().slice(0, 10);
 }
-function nn(s, e = 0) {
+function on(s, e = 0) {
   const t = 10 ** e;
   return Math.round(s * t) / t;
 }
 function K(s, e = 0) {
-  const t = nn(s, e).toFixed(e), [n, o] = t.split("."), r = n.startsWith("-"), l = (r ? n.slice(1) : n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const t = on(s, e).toFixed(e), [n, o] = t.split("."), r = n.startsWith("-"), l = (r ? n.slice(1) : n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   return (r ? "-" : "") + l + (o ? "," + o : "");
 }
 function q(s, e = 0) {
   return `${K(s, e)} €/MWh`;
 }
-function sn(s, e = 1) {
+function an(s, e = 1) {
   return `${K(s / 10, e)} ct/kWh`;
 }
-const rn = /(-?\d{1,3}(?:\.\d{3})*(?:,\d+)?) €\/MWh/g;
-function on(s) {
-  return s.replace(rn, (e, t) => sn(Number(t.replace(/\./g, "").replace(",", "."))));
+const ln = /(-?\d{1,3}(?:\.\d{3})*(?:,\d+)?) €\/MWh/g;
+function cn(s) {
+  return s.replace(ln, (e, t) => an(Number(t.replace(/\./g, "").replace(",", "."))));
 }
-const at = 36e5, lt = 9e5, an = [
+const at = 36e5, lt = 9e5, hn = [
   { key: "negativ", label: "negativ", upTo: 0 },
   { key: "sehr_guenstig", label: "sehr günstig", upTo: 80 },
   { key: "guenstig", label: "günstig", upTo: 130 },
@@ -603,12 +603,12 @@ const at = 36e5, lt = 9e5, an = [
   { key: "sehr_teuer", label: "sehr teuer", upTo: Number.POSITIVE_INFINITY }
 ];
 function ae(s) {
-  for (const e of an)
+  for (const e of hn)
     if (s < e.upTo)
       return e.key;
   return "sehr_teuer";
 }
-function ln(s, e = []) {
+function dn(s, e = []) {
   const t = new Map(e.map((r) => [Date.parse(r.ts), r])), n = /* @__PURE__ */ new Map();
   for (const r of s) {
     if (r.price === null)
@@ -621,7 +621,7 @@ function ln(s, e = []) {
     return { ts: a.toISOString(), ms: r, hour: i?.hour ?? xe(a), priceEurMwh: l ? l.sum / l.n : i.priceEurMwh, negativeQuarters: l?.neg ?? (i && i.priceEurMwh < 0 ? 4 : 0), explanation: i };
   });
 }
-function cn(s, e = [2, 3, 4]) {
+function un(s, e = [2, 3, 4]) {
   const t = s.filter((o) => o.price !== null).map((o) => ({ ms: Date.parse(o.ts), price: o.price })), n = [];
   for (const o of e) {
     const r = o * 4;
@@ -639,14 +639,14 @@ function cn(s, e = [2, 3, 4]) {
   }
   return n;
 }
-function St(s) {
+function Et(s) {
   return `${s.fromHour}-${s.toHour} Uhr`;
 }
 const be = (s) => {
   const e = new Date(s);
   return `${String(xe(e)).padStart(2, "0")}:${String(e.getUTCMinutes()).padStart(2, "0")}`;
 };
-function hn(s, e) {
+function pn(s, e) {
   const t = s.verdict, n = e.verdict;
   if (!t || !n)
     return null;
@@ -660,18 +660,18 @@ function hn(s, e) {
   const r = s.windows.find((a) => a.hours === 3), i = e.windows.find((a) => a.hours === 3), l = r && i ? ` Die günstigsten drei Stunden: morgen ${be(r.from)}-${be(r.to)} Uhr (${q(r.avgEurMwh)}), heute ${be(i.from)}-${be(i.to)} Uhr (${q(i.avgEurMwh)}).` : "";
   return o + l;
 }
-function dn(s) {
+function gn(s) {
   return s.shiftSavingEur === null || s.shiftSavingEur < 0.2 ? null : `10 kWh von ${s.maxHour} auf ${s.minHour} Uhr verschoben: rund ${K(s.shiftSavingEur, 2)} € gespart.`;
 }
-const ct = 6.2, un = 6.4;
-function pn(s) {
+const ct = 6.2, fn = 6.4;
+function mn(s) {
   for (const e of [50, 100, 200, 500, 1e3, 2e3])
     if (s / e <= 6)
       return e;
   return 5e3;
 }
-function gn(s, e, t = {}) {
-  const n = t.width ?? 360, o = t.height ?? 214, r = t.top ?? 40, i = t.bottom ?? 34, l = t.left ?? 30, a = t.right ?? 8, c = { x: l, y: r, w: n - l - a, h: o - r - i }, h = Math.max(1, s.length), u = c.w / h, w = s.map((k) => k.priceEurMwh), y = w.length ? Math.max(...w) : 100, p = w.length ? Math.min(...w) : 0, b = pn(Math.max(y, 50) * 1.15 - Math.min(0, p)), d = Math.max(b, Math.ceil(y * 1.15 / b) * b), M = p < 0 ? Math.floor(p / b) * b : 0, v = (k) => c.y + c.h - (k - M) / (d - M) * c.h, N = v(Math.max(M, 0)), P = [];
+function $n(s, e, t = {}) {
+  const n = t.width ?? 360, o = t.height ?? 214, r = t.top ?? 40, i = t.bottom ?? 34, l = t.left ?? 30, a = t.right ?? 8, c = { x: l, y: r, w: n - l - a, h: o - r - i }, h = Math.max(1, s.length), u = c.w / h, x = s.map((k) => k.priceEurMwh), y = x.length ? Math.max(...x) : 100, p = x.length ? Math.min(...x) : 0, b = mn(Math.max(y, 50) * 1.15 - Math.min(0, p)), d = Math.max(b, Math.ceil(y * 1.15 / b) * b), M = p < 0 ? Math.floor(p / b) * b : 0, v = (k) => c.y + c.h - (k - M) / (d - M) * c.h, N = v(Math.max(M, 0)), P = [];
   for (let k = M; k <= d + 1e-9; k += b)
     P.push({ y: v(k), label: K(k / 10, 0) });
   const m = [];
@@ -681,25 +681,25 @@ function gn(s, e, t = {}) {
   }
   m.push({ x: c.x + c.w, label: "24", anchor: "end" });
   let A = "";
-  s.length && (A = `M${te(c.x)},${te(v(w[0]))}`, s.forEach((k, T) => {
+  s.length && (A = `M${te(c.x)},${te(v(x[0]))}`, s.forEach((k, T) => {
     const F = c.x + (T + 1) * u;
-    A += ` H${te(F)}`, T < s.length - 1 && (A += ` V${te(v(w[T + 1]))}`);
+    A += ` H${te(F)}`, T < s.length - 1 && (A += ` V${te(v(x[T + 1]))}`);
   }));
   const R = s.length ? `${A} V${te(N)} H${te(c.x)} Z` : "", B = s.map((k, T) => ({ index: T, x: c.x + T * u, w: u, y: v(k.priceEurMwh), level: ae(k.priceEurMwh), hour: k.hour })), j = e.map((k) => {
-    const T = c.x + k.startIdx * u, F = (k.endIdx - k.startIdx) * u, V = k.name.length * un + 8 <= F;
+    const T = c.x + k.startIdx * u, F = (k.endIdx - k.startIdx) * u, V = k.name.length * fn + 8 <= F;
     return { index: k.index, x: T, w: F, label: V ? k.name : F >= 18 ? String(k.index + 1) : null, name: k.name };
-  }), I = [];
+  }), L = [];
   if (s.length >= 2 && y !== p) {
-    const k = w.indexOf(y), T = w.indexOf(p), F = (L) => c.x + (L + 0.5) * u, V = (L, C, _) => {
-      const W = C.length * ct, O = F(L);
+    const k = x.indexOf(y), T = x.indexOf(p), F = (I) => c.x + (I + 0.5) * u, V = (I, C, _) => {
+      const W = C.length * ct, O = F(I);
       return O - W / 2 < c.x ? { x: c.x + u * 0.2, y: _, text: C, anchor: "start" } : O + W / 2 > c.x + c.w ? { x: c.x + c.w - u * 0.2, y: _, text: C, anchor: "end" } : { x: O, y: _, text: C, anchor: "middle" };
     }, $ = V(k, `▲ ${K(y / 10, 1)} ct · ${s[k].hour} Uhr`, v(y) - 7);
-    I.push($);
+    L.push($);
     const D = v(p), E = D + 16, z = V(T, `▼ ${K(p / 10, 1)} ct · ${s[T].hour} Uhr`, E <= c.y + c.h - 2 ? E : D - 7);
-    Math.abs(z.y - $.y) < 12 && Math.abs(z.x - $.x) < (z.text.length + $.text.length) * ct * 0.5 && (z.y = $.y + 13), I.push(z);
+    Math.abs(z.y - $.y) < 12 && Math.abs(z.x - $.x) < (z.text.length + $.text.length) * ct * 0.5 && (z.y = $.y + 13), L.push(z);
   }
   const Pe = t.now && t.now.index >= 0 && t.now.index < h ? { x: c.x + (t.now.index + Math.min(1, Math.max(0, t.now.fraction))) * u, label: t.now.label } : null;
-  return { width: n, height: o, plot: c, slotW: u, yOf: v, yTicks: P, xTicks: m, areaPath: R, linePath: A, zeroY: M < 0 ? v(0) : null, baselineY: N, slots: B, bands: j, labels: I, now: Pe, yMax: d, yMin: M };
+  return { width: n, height: o, plot: c, slotW: u, yOf: v, yTicks: P, xTicks: m, areaPath: R, linePath: A, zeroY: M < 0 ? v(0) : null, baselineY: N, slots: B, bands: j, labels: L, now: Pe, yMax: d, yMin: M };
 }
 function te(s) {
   return String(Math.round(s * 10) / 10);
@@ -712,14 +712,14 @@ const ve = [
   { key: "gas", label: "Gas" },
   { key: "other", label: "Sonstige" },
   { key: "forecastRest", label: "Übrige" }
-], re = 9e5, fn = 36e5;
+], re = 9e5, wn = 36e5;
 function ke(...s) {
   let e = 0, t = 0;
   for (const n of s)
     n !== null && (e += n, t++);
   return t ? e : null;
 }
-function mn(s) {
+function xn(s) {
   const e = s, t = (r) => {
     const i = e[r];
     return i.load != null && i.windOnshore != null && i.windOffshore != null && i.solar != null && i.lignite != null && i.hardCoal != null && i.gas != null;
@@ -775,7 +775,7 @@ function ht(s, e, t) {
     forecast: n.filter((a) => a.forecast).length > n.length / 2
   };
 }
-const Oe = 5.6, $n = 11;
+const Oe = 5.6, yn = 11;
 function Ue(s, e, t, n = !0, o = !0) {
   const r = [];
   if (!s.length)
@@ -788,8 +788,8 @@ function Ue(s, e, t, n = !0, o = !0) {
 function ne(s) {
   return String(Math.round(s * 10) / 10);
 }
-function wn(s, e, t, n = {}) {
-  const o = n.width ?? 360, r = n.height ?? 150, i = n.top ?? 18, l = n.bottom ?? 20, a = n.left ?? 30, c = n.right ?? 8, h = { x: a, y: i, w: o - a - c, h: r - i - l }, u = Math.max(re, t - e), w = ($) => h.x + ($ - e) / u * h.w, y = s.filter(($) => $ !== null), p = y.map(($) => ve.reduce((D, E) => D + $.layers[E.key], 0)), b = Math.max(0, ...p, ...y.map(($) => $.load ?? 0)), d = b > 6e4 ? 2e4 : 1e4, M = Math.max(d, Math.ceil(b * 1.06 / d) * d), v = ($) => h.y + h.h - $ / M * h.h, N = [];
+function bn(s, e, t, n = {}) {
+  const o = n.width ?? 360, r = n.height ?? 150, i = n.top ?? 18, l = n.bottom ?? 20, a = n.left ?? 30, c = n.right ?? 8, h = { x: a, y: i, w: o - a - c, h: r - i - l }, u = Math.max(re, t - e), x = ($) => h.x + ($ - e) / u * h.w, y = s.filter(($) => $ !== null), p = y.map(($) => ve.reduce((D, E) => D + $.layers[E.key], 0)), b = Math.max(0, ...p, ...y.map(($) => $.load ?? 0)), d = b > 6e4 ? 2e4 : 1e4, M = Math.max(d, Math.ceil(b * 1.06 / d) * d), v = ($) => h.y + h.h - $ / M * h.h, N = [];
   let P = [];
   for (const $ of s)
     $ && (!P.length || $.ms - P[P.length - 1].ms === re) ? P.push($) : (P.length && N.push(P), P = $ ? [$] : []);
@@ -799,17 +799,17 @@ function wn(s, e, t, n = {}) {
     if (!y.some((_) => _.layers[$.key] > 0))
       return;
     const E = (_) => ve.slice(0, D).reduce((W, O) => W + _.layers[O.key], 0), z = (_) => E(_) + _.layers[$.key];
-    let L = "", C = null;
+    let I = "", C = null;
     for (const _ of N) {
-      const W = Ue(_, w, (U) => v(z(U))), O = Ue(_, w, (U) => v(E(U))).reverse();
-      L += `M${W.map(([U, X]) => `${ne(U)},${ne(X)}`).join(" L")} L${O.map(([U, X]) => `${ne(U)},${ne(X)}`).join(" L")} Z `;
+      const W = Ue(_, x, (U) => v(z(U))), O = Ue(_, x, (U) => v(E(U))).reverse();
+      I += `M${W.map(([U, X]) => `${ne(U)},${ne(X)}`).join(" L")} L${O.map(([U, X]) => `${ne(U)},${ne(X)}`).join(" L")} Z `;
       for (const U of _) {
         const X = v(E(U)) - v(z(U));
         (!C || X > C.band) && (C = { x: U, band: X });
       }
     }
-    if (m.push({ key: $.key, label: $.label, path: L.trim() }), C && C.band >= $n) {
-      const _ = $.label, W = _.length * Oe, O = Math.min(h.x + h.w - W / 2 - 2, Math.max(h.x + W / 2 + 2, w(C.x.ms + re / 2))), U = (v(E(C.x)) + v(z(C.x))) / 2 + 3.5;
+    if (m.push({ key: $.key, label: $.label, path: I.trim() }), C && C.band >= yn) {
+      const _ = $.label, W = _.length * Oe, O = Math.min(h.x + h.w - W / 2 - 2, Math.max(h.x + W / 2 + 2, x(C.x.ms + re / 2))), U = (v(E(C.x)) + v(z(C.x))) / 2 + 3.5;
       A.some((Te) => Math.abs(Te.y - U) < 12 && Math.abs(Te.x - O) < (W + Te.text.length * Oe) / 2 + 4) || A.push({ key: $.key, x: O, y: U, text: _ });
     }
   });
@@ -819,41 +819,41 @@ function wn(s, e, t, n = {}) {
     let E = 0;
     for (; E < D.length; ) {
       const z = D[E].actual;
-      let L = E;
-      for (; L + 1 < D.length && D[L + 1].actual === z; )
-        L++;
-      const C = D.slice(E, L + 1), _ = Ue(C, w, (O) => v(O.load), E === 0, L === D.length - 1);
+      let I = E;
+      for (; I + 1 < D.length && D[I + 1].actual === z; )
+        I++;
+      const C = D.slice(E, I + 1), _ = Ue(C, x, (O) => v(O.load), E === 0, I === D.length - 1);
       if (E > 0) {
         const O = D[E - 1];
-        _.unshift([w(O.ms + re / 2), v(O.load)]);
+        _.unshift([x(O.ms + re / 2), v(O.load)]);
       }
       const W = `M${_.map(([O, U]) => `${ne(O)},${ne(U)}`).join(" L")} `;
-      z ? R += W : B += W, E = L + 1;
+      z ? R += W : B += W, E = I + 1;
     }
   }
-  const j = y.find(($) => $.forecast), I = y.some(($) => $.actual), Pe = j && I ? w(j.ms) : null, k = [0, M / 2, M].map(($) => ({ y: v($), label: K($ / 1e3, 0) })), T = [];
-  for (let $ = e; $ < t; $ += fn) {
+  const j = y.find(($) => $.forecast), L = y.some(($) => $.actual), Pe = j && L ? x(j.ms) : null, k = [0, M / 2, M].map(($) => ({ y: v($), label: K($ / 1e3, 0) })), T = [];
+  for (let $ = e; $ < t; $ += wn) {
     const D = xe(new Date($));
-    D % 6 === 0 && (T.some((E) => E.label === String(D)) || T.push({ x: w($), label: String(D), anchor: $ === e ? "start" : "middle" }));
+    D % 6 === 0 && (T.some((E) => E.label === String(D)) || T.push({ x: x($), label: String(D), anchor: $ === e ? "start" : "middle" }));
   }
   T.push({ x: h.x + h.w, label: "24", anchor: "end" });
   let F = null;
   const V = y.filter(($) => $.load !== null);
   if (V.length) {
-    const $ = I ? "Verbrauch" : "Erzeugung gesamt", D = $.length * Oe, E = (C) => v(ve.reduce((_, W) => _ + C.layers[W.key], 0)) - v(C.load), z = V.reduce((C, _) => E(_) > E(C) ? _ : C, V[0]);
-    F = { x: Math.min(h.x + h.w - D - 2, Math.max(h.x + 2, w(z.ms) - D / 2)), y: Math.max(h.y + 9, v(z.load) - 4), text: $ };
+    const $ = L ? "Verbrauch" : "Erzeugung gesamt", D = $.length * Oe, E = (C) => v(ve.reduce((_, W) => _ + C.layers[W.key], 0)) - v(C.load), z = V.reduce((C, _) => E(_) > E(C) ? _ : C, V[0]);
+    F = { x: Math.min(h.x + h.w - D - 2, Math.max(h.x + 2, x(z.ms) - D / 2)), y: Math.max(h.y + 9, v(z.load) - 4), text: $ };
   }
   return {
     width: o,
     height: r,
     plot: h,
-    xOf: w,
+    xOf: x,
     yOf: v,
     layers: m,
     loadPath: R.trim(),
     forecastLoadPath: B.trim(),
     forecastX: Pe,
-    allForecast: y.length > 0 && !I,
+    allForecast: y.length > 0 && !L,
     yTicks: k,
     xTicks: T,
     labels: A,
@@ -861,7 +861,7 @@ function wn(s, e, t, n = {}) {
     hasData: y.length > 0
   };
 }
-const xn = 9e5, yn = [
+const vn = 9e5, kn = [
   "load",
   "windOnshore",
   "windOffshore",
@@ -878,67 +878,67 @@ const xn = 9e5, yn = [
   "forecastGeneration",
   "forecastWind",
   "forecastSolar"
-], bn = (s) => Math.round(s * 10) / 10;
+], _n = (s) => Math.round(s * 10) / 10;
 function We(s) {
   const e = Date.parse(s.start), t = [];
   for (let n = 0; n < s.slots; n++) {
-    const o = { ts: new Date(e + n * xn).toISOString(), price: s.price[n] ?? null };
-    for (const i of yn)
+    const o = { ts: new Date(e + n * vn).toISOString(), price: s.price[n] ?? null };
+    for (const i of kn)
       o[i] = s.mix?.[i][n] ?? null;
     const r = o.windOnshore !== null || o.windOffshore !== null ? (o.windOnshore ?? 0) + (o.windOffshore ?? 0) : null;
-    o.residual = o.load !== null && r !== null && o.solar !== null ? bn(o.load - r - o.solar) : null, t.push(o);
+    o.residual = o.load !== null && r !== null && o.solar !== null ? _n(o.load - r - o.solar) : null, t.push(o);
   }
   return t;
 }
-const Le = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }), Ve = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 }), qe = (s) => Le.format(Math.round(s) + 0), dt = (s) => Ve.format(Math.abs(s) < 0.05 ? 0 : s), ue = (s) => `${Ve.format(s / 1e3)} GW`, Et = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"], vn = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
-function At(s) {
+const Ie = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }), Ve = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 }), qe = (s) => Ie.format(Math.round(s) + 0), dt = (s) => Ve.format(Math.abs(s) < 0.05 ? 0 : s), ue = (s) => `${Ve.format(s / 1e3)} GW`, At = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"], Mn = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+function Dt(s) {
   return s.split("-").map(Number);
 }
-function kn(s) {
-  const [e, t, n] = At(s);
-  return `${Et[new Date(Date.UTC(e, t - 1, n)).getUTCDay()]} ${n}. ${vn[t - 1]}`;
+function Sn(s) {
+  const [e, t, n] = Dt(s);
+  return `${At[new Date(Date.UTC(e, t - 1, n)).getUTCDay()]} ${n}. ${Mn[t - 1]}`;
 }
-function _n(s) {
-  const [e, t, n] = At(s);
-  return `${Et[new Date(Date.UTC(e, t - 1, n)).getUTCDay()]} ${String(n).padStart(2, "0")}.${String(t).padStart(2, "0")}.`;
-}
-const Mn = (s) => `${s}-${(s + 1) % 24} Uhr`, Sn = new Intl.DateTimeFormat("de-DE", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "Europe/Berlin" }), G = (s) => Sn.format(new Date(s)), Dt = (s) => `${G(s)}-${G(new Date(s).getTime() + 9e5)} Uhr`;
 function En(s) {
-  return s >= 1.85 ? `${Le.format(Math.round(s))}× so teuer` : s >= 1.15 ? `${Ve.format(s)}× so teuer` : s > 0.87 ? "etwa gleich" : `${Le.format((1 - s) * 100)} % günstiger`;
+  const [e, t, n] = Dt(s);
+  return `${At[new Date(Date.UTC(e, t - 1, n)).getUTCDay()]} ${String(n).padStart(2, "0")}.${String(t).padStart(2, "0")}.`;
 }
-const An = /^[^:]*?\d{1,2}-\d{1,2} Uhr: [\s\S]*?\. (?=[A-ZÄÖÜ])/, Dn = (s) => s.replace(An, "");
-function Cn(s, e, t) {
+const An = (s) => `${s}-${(s + 1) % 24} Uhr`, Dn = new Intl.DateTimeFormat("de-DE", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "Europe/Berlin" }), G = (s) => Dn.format(new Date(s)), Ct = (s) => `${G(s)}-${G(new Date(s).getTime() + 9e5)} Uhr`;
+function Cn(s) {
+  return s >= 1.85 ? `${Ie.format(Math.round(s))}× so teuer` : s >= 1.15 ? `${Ve.format(s)}× so teuer` : s > 0.87 ? "etwa gleich" : `${Ie.format((1 - s) * 100)} % günstiger`;
+}
+const Pn = /^[^:]*?\d{1,2}-\d{1,2} Uhr: [\s\S]*?\. (?=[A-ZÄÖÜ])/, Tn = (s) => s.replace(Pn, "");
+function zn(s, e, t) {
   const n = s % 24, o = e % 24;
   return n === o ? !1 : n < o ? t >= n && t < o : t >= n || t < o;
 }
-function Pn(s, e, t) {
+function On(s, e, t) {
   let n = e.base_ct;
-  for (const r of e.windows) Cn(r.from_hour, r.to_hour, t) && (n = r.ct);
+  for (const r of e.windows) zn(r.from_hour, r.to_hour, t) && (n = r.ct);
   return (e.kind === "dynamic" ? s / 10 * (1 + e.vat / 100) : 0) + n;
 }
-const Tn = { kind: "dynamic", base_ct: 19.69, vat: 19, windows: [] };
-function zn(s, e) {
-  const t = e ?? Tn, n = (i) => typeof i == "number" ? i : xe(new Date(i)), o = (i, l) => s === "eur_mwh" ? qe(i) : dt(s === "mein_preis" ? Pn(i, t, n(l)) : i / 10), r = s === "eur_mwh" ? "€/MWh" : "ct/kWh";
+const Un = { kind: "dynamic", base_ct: 19.69, vat: 19, windows: [] };
+function Rn(s, e) {
+  const t = e ?? Un, n = (i) => typeof i == "number" ? i : xe(new Date(i)), o = (i, l) => s === "eur_mwh" ? qe(i) : dt(s === "mein_preis" ? On(i, t, n(l)) : i / 10), r = s === "eur_mwh" ? "€/MWh" : "ct/kWh";
   return {
     unit: s,
     suffix: r,
     number: o,
     price: (i, l) => `${o(i, l)} ${r}`,
-    text: (i) => s === "eur_mwh" ? i : on(i),
+    text: (i) => s === "eur_mwh" ? i : cn(i),
     axisUnit: s === "eur_mwh" ? "€" : "ct"
   };
 }
-const Ct = "strompreis.ha.resolution.v1";
-function On() {
+const Pt = "strompreis.ha.resolution.v1";
+function Wn() {
   try {
-    return localStorage.getItem(Ct) === "quarter" ? "quarter" : "hour";
+    return localStorage.getItem(Pt) === "quarter" ? "quarter" : "hour";
   } catch {
     return "hour";
   }
 }
-class Un extends EventTarget {
+class In extends EventTarget {
   constructor() {
-    super(...arguments), this.home = null, this.tariff = null, this.stale = !1, this.error = null, this.loading = !0, this.day = "today", this.resolution = On(), this.selectedMs = null, this.now = Date.now(), this.connection = null, this.clock = null;
+    super(...arguments), this.home = null, this.tariff = null, this.stale = !1, this.error = null, this.loading = !0, this.day = "today", this.resolution = Wn(), this.selectedMs = null, this.now = Date.now(), this.persist = !0, this.connection = null, this.clock = null;
   }
   connect(e) {
     this.connection !== e.connection && (this.connection = e.connection, this.loading = !0, e.connection.subscribeMessage((t) => {
@@ -950,9 +950,9 @@ class Un extends EventTarget {
     }, 3e4));
   }
   set(e) {
-    if (e.day !== void 0 && e.day !== this.day && (this.selectedMs = null), Object.assign(this, e), e.resolution)
+    if (e.day !== void 0 && e.day !== this.day && (this.selectedMs = null), Object.assign(this, e), e.resolution && this.persist)
       try {
-        localStorage.setItem(Ct, e.resolution);
+        localStorage.setItem(Pt, e.resolution);
       } catch {
       }
     this.changed();
@@ -961,18 +961,18 @@ class Un extends EventTarget {
     this.dispatchEvent(new Event("change"));
   }
 }
-const x = new Un(), Rn = [
+const w = new In(), Ln = [
   { value: "ct_kwh", label: "Börsenpreis in ct/kWh" },
   { value: "mein_preis", label: "Mein Preis (Tarif aus der Integration)" },
   { value: "eur_mwh", label: "Börsenpreis in €/MWh" }
-], ye = { name: "unit", selector: { select: { mode: "dropdown", options: Rn } } }, ce = { name: "title", selector: { text: {} } }, he = {
+], ye = { name: "unit", selector: { select: { mode: "dropdown", options: Ln } } }, ce = { name: "title", selector: { text: {} } }, he = {
   unit: "Preise anzeigen als",
   title: "Überschrift (leer: Standard)",
   show_verdict: "Tagesbild zeigen",
   show_strip: "Preisstreifen zeigen",
   show_switches: "Tag und Raster umschaltbar",
   show_text: "Texte zeigen"
-}, Wn = {
+}, Hn = {
   negativ: "negativ",
   sehr_guenstig: "sehr günstig",
   guenstig: "günstig",
@@ -994,7 +994,7 @@ class H extends ge {
     };
   }
   set hass(e) {
-    this._hass = e, x.connect(e);
+    this._hass = e, w.connect(e);
     const t = !!e.themes?.darkMode;
     t !== this.dark && (this.dark = t);
   }
@@ -1009,24 +1009,24 @@ class H extends ge {
     return 4;
   }
   connectedCallback() {
-    super.connectedCallback(), x.addEventListener("change", this.onStore), this.sizeObserver.observe(this);
+    super.connectedCallback(), w.addEventListener("change", this.onStore), this.sizeObserver.observe(this);
   }
   disconnectedCallback() {
-    x.removeEventListener("change", this.onStore), this.sizeObserver.disconnect(), super.disconnectedCallback();
+    w.removeEventListener("change", this.onStore), this.sizeObserver.disconnect(), super.disconnectedCallback();
   }
   get units() {
-    return zn(this.config?.unit ?? "ct_kwh", x.tariff);
+    return Rn(this.config?.unit ?? "ct_kwh", w.tariff);
   }
   /** a card in the integration's absence or before the first data: one line instead of an empty frame */
   placeholder() {
-    return x.error === "not_loaded" ? this.frame(f`<p class="muted">Die Integration „Strompreis verstehen“ ist nicht eingerichtet.</p>`) : x.error ? this.frame(f`<p class="muted">Keine Daten von „Strompreis verstehen“ (${x.error}).</p>`) : x.loading || !x.home ? this.frame(f`<div class="skeleton"></div>`) : null;
+    return w.error === "not_loaded" ? this.frame(f`<p class="muted">Die Integration „Strompreis verstehen“ ist nicht eingerichtet.</p>`) : w.error === "no_data" ? this.frame(f`<p class="muted">Gerade keine Daten von „Strompreis verstehen“. Nächster Versuch in wenigen Minuten.</p>`) : w.error ? this.frame(f`<p class="muted">Keine Daten von „Strompreis verstehen“ (${w.error}).</p>`) : w.loading || !w.home ? this.frame(f`<div class="skeleton"></div>`) : null;
   }
   frame(e, t) {
     const n = this.config?.title ?? t;
     return f`<ha-card>
       <div class="card">
         ${n ? f`<h2 class="kicker">${n}</h2>` : g} ${e}
-        ${x.stale ? f`<p class="note">Keine Verbindung zum Datendienst, angezeigt wird der letzte Stand.</p>` : g}
+        ${w.stale ? f`<p class="note">Keine Verbindung zum Datendienst, angezeigt wird der letzte Stand.</p>` : g}
       </div>
     </ha-card>`;
   }
@@ -1190,18 +1190,18 @@ class H extends ge {
   `;
   }
 }
-const Ie = 36e5, Ln = 9e5, ut = (s) => s;
-function In(s, e, t) {
-  if (!t) return ln(e, ut(s.hours));
+const Le = 36e5, Nn = 9e5, ut = (s) => s;
+function Fn(s, e, t) {
+  if (!t) return dn(e, ut(s.hours));
   const n = new Map(ut(s.hours).map((r) => [Date.parse(r.ts), r])), o = [];
   for (const r of e) {
     if (r.price === null) continue;
     const i = Date.parse(r.ts);
-    o.push({ ts: r.ts, ms: i, hour: xe(new Date(i)), priceEurMwh: r.price, negativeQuarters: r.price < 0 ? 4 : 0, explanation: n.get(Math.floor(i / Ie) * Ie) ?? null });
+    o.push({ ts: r.ts, ms: i, hour: xe(new Date(i)), priceEurMwh: r.price, negativeQuarters: r.price < 0 ? 4 : 0, explanation: n.get(Math.floor(i / Le) * Le) ?? null });
   }
   return o;
 }
-function Hn(s, e) {
+function Bn(s, e) {
   return !e.length || !s.length ? [] : e.map((t) => {
     const n = Date.parse(t.from), o = Date.parse(t.to);
     let r = s.findIndex((l) => l.ms >= n), i = s.findIndex((l) => l.ms >= o);
@@ -1209,22 +1209,22 @@ function Hn(s, e) {
   });
 }
 const pt = /* @__PURE__ */ new WeakMap();
-function Nn(s) {
-  const e = x.home;
+function jn(s) {
+  const e = w.home;
   return e ? s === "yesterday" ? e.yesterday : s === "today" ? e.today : e.tomorrow : null;
 }
-function Ce(s = x.day) {
-  const e = Nn(s);
+function Ce(s = w.day) {
+  const e = jn(s);
   if (!e || !e.hasPrices) return null;
-  const t = x.resolution === "quarter";
+  const t = w.resolution === "quarter";
   let n = pt.get(e);
   n || (n = { quarters: We(e), grids: /* @__PURE__ */ new Map() }, pt.set(e, n));
   let o = n.grids.get(t);
   if (!o) {
-    const d = In(e, n.quarters, t);
-    o = { slots: d, phases: Hn(d, e.phases) }, n.grids.set(t, o);
+    const d = Fn(e, n.quarters, t);
+    o = { slots: d, phases: Bn(d, e.phases) }, n.grids.set(t, o);
   }
-  const { slots: r, phases: i } = o, l = t ? Ln : Ie, a = (d) => r.findIndex((M) => d >= M.ms && d < M.ms + l), c = s === "today" ? a(x.now) : -1, h = c >= 0 ? (x.now - r[c].ms) / l : 0, u = r.reduce((d, M, v) => d < 0 || M.priceEurMwh < r[d].priceEurMwh ? v : d, -1), w = x.selectedMs !== null ? a(x.selectedMs) : -1, y = c >= 0 ? c : u, p = w >= 0 ? w : y >= 0 ? y : null, b = (d) => i.find((M) => d >= M.startIdx && d < M.endIdx) ?? null;
+  const { slots: r, phases: i } = o, l = t ? Nn : Le, a = (d) => r.findIndex((M) => d >= M.ms && d < M.ms + l), c = s === "today" ? a(w.now) : -1, h = c >= 0 ? (w.now - r[c].ms) / l : 0, u = r.reduce((d, M, v) => d < 0 || M.priceEurMwh < r[d].priceEurMwh ? v : d, -1), x = w.selectedMs !== null ? a(w.selectedMs) : -1, y = c >= 0 ? c : u, p = x >= 0 ? x : y >= 0 ? y : null, b = (d) => i.find((M) => d >= M.startIdx && d < M.endIdx) ?? null;
   return {
     key: s,
     day: e,
@@ -1242,10 +1242,10 @@ function Ce(s = x.day) {
   };
 }
 function He(s, e) {
-  return s.fine ? Dt(e.ms) : Mn(e.hour);
+  return s.fine ? Ct(e.ms) : An(e.hour);
 }
 const gt = { yesterday: "Gestern", today: "Heute", tomorrow: "Morgen" };
-class Fn extends H {
+class Gn extends H {
   constructor() {
     super(...arguments), this.dragging = !1, this.resizeObserver = null, this.observed = null;
   }
@@ -1275,7 +1275,7 @@ class Fn extends H {
   render() {
     const e = this.placeholder();
     if (e) return e;
-    const t = x.home, n = x.day, o = Ce(n), r = this.config, i = this.header(t.date, n);
+    const t = w.home, n = w.day, o = Ce(n), r = this.config, i = this.header(t.date, n);
     if (!o) {
       const l = n === "tomorrow" ? "Die Preise für morgen kommen nach der Auktion, meist gegen 13 Uhr." : "Für diesen Tag liegen keine Preise vor.";
       return this.frame(f`${i}<p class="muted small">${l}</p>`);
@@ -1285,22 +1285,22 @@ class Fn extends H {
     `);
   }
   header(e, t) {
-    const n = t === "yesterday" ? x.home.yesterday.date : t === "tomorrow" ? x.home.tomorrow?.date ?? Bn(e) : e, o = f`<p class="kicker">${gt[t]} · ${kn(n)}</p>`;
+    const n = t === "yesterday" ? w.home.yesterday.date : t === "tomorrow" ? w.home.tomorrow?.date ?? Vn(e) : e, o = f`<p class="kicker">${gt[t]} · ${Sn(n)}</p>`;
     if (this.config.show_switches === !1) return o;
-    const r = !!x.home.tomorrow;
+    const r = !!w.home.tomorrow;
     return f`<div class="head">
       ${o}
       <div class="switches">
         <div class="seg" role="group" aria-label="Tag">
           ${["yesterday", "today", "tomorrow"].map(
-      (i) => f`<button type="button" aria-pressed=${i === t} @click=${() => x.set({ day: i })}>
+      (i) => f`<button type="button" aria-pressed=${i === t} @click=${() => w.set({ day: i })}>
                 ${gt[i]}${i === "tomorrow" && r && t !== "tomorrow" ? f`<span class="dot" aria-label="Preise da"></span>` : g}
               </button>`
     )}
         </div>
         <div class="seg" role="group" aria-label="Raster">
-          <button type="button" aria-pressed=${x.resolution === "hour"} @click=${() => x.set({ resolution: "hour" })}>1 h</button>
-          <button type="button" aria-pressed=${x.resolution === "quarter"} @click=${() => x.set({ resolution: "quarter" })}>15 min</button>
+          <button type="button" aria-pressed=${w.resolution === "hour"} @click=${() => w.set({ resolution: "hour" })}>1 h</button>
+          <button type="button" aria-pressed=${w.resolution === "quarter"} @click=${() => w.set({ resolution: "quarter" })}>15 min</button>
         </div>
       </div>
     </div>`;
@@ -1308,26 +1308,26 @@ class Fn extends H {
   verdict(e) {
     const t = e.day.verdict;
     if (!t) return g;
-    const n = this.units, o = e.day.windows.find((a) => a.hours === 3) ?? e.day.windows[0] ?? null, r = n.unit === "mein_preis" ? null : dn(t), i = x.home.today, l = e.key === "tomorrow" && n.unit !== "mein_preis" ? hn(e.day, i) : null;
+    const n = this.units, o = e.day.windows.find((a) => a.hours === 3) ?? e.day.windows[0] ?? null, r = n.unit === "mein_preis" ? null : gn(t), i = w.home.today, l = e.key === "tomorrow" && n.unit !== "mein_preis" ? pn(e.day, i) : null;
     return f`<div class="verdict">
       <p class="headline">${t.headline}</p>
       <p class="muted small">${n.text(t.detail)}${r ? ` ${r}` : ""}</p>
       ${l ? f`<p class="small">${n.text(l)}</p>` : g}
       ${o && !t.flat ? f`<p class="best small">
             <span class="badge">Beste ${o.hours} Stunden</span>
-            <button type="button" class="link" @click=${() => x.set({ selectedMs: Date.parse(o.from) })}>
+            <button type="button" class="link" @click=${() => w.set({ selectedMs: Date.parse(o.from) })}>
               <b>${G(o.from)}-${G(o.to)} Uhr</b>, im Schnitt ${n.price(o.avgEurMwh, o.from)}
             </button>
           </p>` : g}
     </div>`;
   }
   chart(e) {
-    const t = this.units, n = gn(e.slots, e.phases), o = t.unit === "eur_mwh", r = (d) => o ? String(Math.round(Number(d.replace(/\./g, "").replace(",", ".")) * 10)) : d, i = (d) => o ? d.replace(/(-?[\d.]+,\d) ct/, (M, v) => `${Math.round(Number(v.replace(/\./g, "").replace(",", ".")) * 10)} €`) : d, l = e.idx !== null ? n.slots[e.idx] : void 0, a = e.phase, c = n.bands[n.bands.length - 1], h = e.nowIdx >= 0 ? n.plot.x + (e.nowIdx + e.nowFraction) * n.slotW : null, u = h !== null && h - 64 < n.plot.x, w = (d) => {
+    const t = this.units, n = $n(e.slots, e.phases), o = t.unit === "eur_mwh", r = (d) => o ? String(Math.round(Number(d.replace(/\./g, "").replace(",", ".")) * 10)) : d, i = (d) => o ? d.replace(/(-?[\d.]+,\d) ct/, (M, v) => `${Math.round(Number(v.replace(/\./g, "").replace(",", ".")) * 10)} €`) : d, l = e.idx !== null ? n.slots[e.idx] : void 0, a = e.phase, c = n.bands[n.bands.length - 1], h = e.nowIdx >= 0 ? n.plot.x + (e.nowIdx + e.nowFraction) * n.slotW : null, u = h !== null && h - 64 < n.plot.x, x = (d) => {
       const v = d.currentTarget.getBoundingClientRect(), N = (d.clientX - v.left) / v.width * n.width, P = Math.floor((N - n.plot.x) / n.slotW), m = e.slots[P];
-      m && P !== e.idx && x.set({ selectedMs: m.ms });
+      m && P !== e.idx && w.set({ selectedMs: m.ms });
     }, y = (d) => {
-      d.pointerType === "mouse" && d.button !== 0 || (this.dragging = !0, d.currentTarget.setPointerCapture(d.pointerId), w(d));
-    }, p = (d) => this.dragging && w(d), b = () => this.dragging = !1;
+      d.pointerType === "mouse" && d.button !== 0 || (this.dragging = !0, d.currentTarget.setPointerCapture(d.pointerId), x(d));
+    }, p = (d) => this.dragging && x(d), b = () => this.dragging = !1;
     return f`<svg viewBox="0 0 ${n.width} ${n.height}" aria-hidden="true" @pointerdown=${y} @pointermove=${p} @pointerup=${b} @pointercancel=${b}>
       ${n.bands.map(
       (d) => S`<g opacity=${a && a.index !== d.index ? 0.45 : 1}>
@@ -1350,7 +1350,7 @@ class Fn extends H {
       ${n.zeroY !== null ? S`<line x1=${n.plot.x} x2=${n.plot.x + n.plot.w} y1=${n.zeroY} y2=${n.zeroY} stroke="var(--ink)" stroke-width="1" opacity="0.5" vector-effect="non-scaling-stroke" />` : g}
       ${n.linePath ? S`<path d=${n.linePath} fill="none" stroke="var(--ink)" stroke-width="1.75" stroke-linejoin="round" vector-effect="non-scaling-stroke" />` : g}
       ${h !== null ? S`<line x1=${h} x2=${h} y1=${n.plot.y - 6} y2=${n.plot.y + n.plot.h} stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
-          <text x=${u ? h + 4 : h - 4} y=${n.plot.y + 2} text-anchor=${u ? "start" : "end"} fill="var(--ink)" font-size="10" font-weight="500" paint-order="stroke" stroke="var(--halo)" stroke-width="3">jetzt ${G(x.now)}</text>` : g}
+          <text x=${u ? h + 4 : h - 4} y=${n.plot.y + 2} text-anchor=${u ? "start" : "end"} fill="var(--ink)" font-size="10" font-weight="500" paint-order="stroke" stroke="var(--halo)" stroke-width="3">jetzt ${G(w.now)}</text>` : g}
       ${n.labels.map((d) => S`<text class="anno" x=${d.x} y=${d.y} text-anchor=${d.anchor} fill="var(--ink)" font-size="11" font-weight="500" paint-order="stroke" stroke="var(--halo)" stroke-width="3">${i(d.text)}</text>`)}
       ${l ? S`<circle cx=${l.x + l.w / 2} cy=${l.y} r="3.5" fill="var(--ink)" stroke="var(--halo)" stroke-width="2" vector-effect="non-scaling-stroke" />` : g}
     </svg>`;
@@ -1358,7 +1358,7 @@ class Fn extends H {
   strip(e) {
     const t = this.units, n = e.slots.length, o = e.slot, r = e.fine ? 1 : 2, i = (l) => {
       const a = Number(l.target.value), c = e.slots[a];
-      c && x.set({ selectedMs: c.ms });
+      c && w.set({ selectedMs: c.ms });
     };
     return f`<div class="strip">
       <div class="readout small">
@@ -1529,11 +1529,11 @@ function ft(s) {
   const e = Math.max(1, Number(s.dataset.count));
   s.style.setProperty("--bar", `${s.clientWidth / e}px`);
 }
-function Bn(s) {
+function Vn(s) {
   const e = /* @__PURE__ */ new Date(`${s}T12:00:00Z`);
   return e.setUTCDate(e.getUTCDate() + 1), e.toISOString().slice(0, 10);
 }
-class jn extends H {
+class qn extends H {
   static {
     this.properties = { ...H.properties, open: { state: !0 } };
   }
@@ -1564,10 +1564,10 @@ class jn extends H {
       <p class="kicker">${i}${o.basedOnActuals ? "" : " · Prognose"}</p>
       <div class="top">
         <span class="price">${r.price(n.priceEurMwh, n.hour)}</span>
-        ${r.unit !== "mein_preis" && a.priceVsMedianFactor != null ? f`<span class="small muted"><b class="ink">${En(a.priceVsMedianFactor)}</b> wie sonst zu dieser Stunde</span>` : g}
+        ${r.unit !== "mein_preis" && a.priceVsMedianFactor != null ? f`<span class="small muted"><b class="ink">${Cn(a.priceVsMedianFactor)}</b> wie sonst zu dieser Stunde</span>` : g}
       </div>
       <h3>${o.headline}</h3>
-      <p class="text">${r.text(Dn(o.text))}</p>
+      <p class="text">${r.text(Tn(o.text))}</p>
       ${c.length ? f`<div class="chips">
             ${c.map(
       (u) => f`<button type="button" class="chip ${u.direction} ${u.key === l ? "open" : ""}" aria-expanded=${u.key === l} @click=${() => this.open = u.key === l ? null : { ts: o.ts, key: u.key }}>
@@ -1654,7 +1654,7 @@ class jn extends H {
     ];
   }
 }
-const Gn = {
+const Zn = {
   wind: "var(--src-wind)",
   solar: "var(--src-solar)",
   bio: "var(--src-bio)",
@@ -1663,7 +1663,7 @@ const Gn = {
   other: "var(--src-other)",
   forecastRest: "var(--src-other)"
 }, mt = (s) => `${qe(s / 1e3)} GW`;
-class Vn extends H {
+class Kn extends H {
   constructor() {
     super(...arguments), this.dragging = !1, this.cache = null;
   }
@@ -1682,30 +1682,30 @@ class Vn extends H {
   render() {
     const e = this.placeholder();
     if (e) return e;
-    const t = Ce(), n = x.day === "yesterday" ? "Woher der Strom kam" : "Woher der Strom kommt";
+    const t = Ce(), n = w.day === "yesterday" ? "Woher der Strom kam" : "Woher der Strom kommt";
     if (!t) return this.frame(f`<p class="muted small">Für diesen Tag liegen keine Daten vor.</p>`, n);
-    this.cache?.quarters !== t.quarters && (this.cache = { quarters: t.quarters, mq: mn(t.quarters) });
-    const o = this.cache.mq, r = Mt(t.day.date), i = r.start.getTime(), l = r.end.getTime(), a = wn(o, i, l);
+    this.cache?.quarters !== t.quarters && (this.cache = { quarters: t.quarters, mq: xn(t.quarters) });
+    const o = this.cache.mq, r = St(t.day.date), i = r.start.getTime(), l = r.end.getTime(), a = bn(o, i, l);
     if (!a.hasData)
       return this.frame(f`<p class="muted small">Die Erzeugung erscheint hier, sobald die Prognosen für Wind, Sonne und Erzeugung veröffentlicht sind, meist am Abend.</p>`, n);
     const c = t.phase, h = ht(o, c ? Date.parse(c.from) : i, c ? Date.parse(c.to) : l);
     let u = "";
     if (h.renewableShare !== null) {
-      const m = c ? `${c.name}, ${St(c)}` : "Ganzer Tag", A = qe(h.renewableShare * 100), R = h.renewableShare > 1.005;
+      const m = c ? `${c.name}, ${Et(c)}` : "Ganzer Tag", A = qe(h.renewableShare * 100), R = h.renewableShare > 1.005;
       u = h.forecast ? `${m}: laut Prognose ${R ? `mehr Wind und Sonne als Erzeugungsbedarf (${A} %)` : `${A} % aus Wind und Sonne`}` : `${m}: ${R ? `mehr Ökostrom als Verbrauch (${A} %)` : `${A} % erneuerbar`}${h.gasMaxMw !== null && h.gasMaxMw >= 500 ? `, Gas bis ${mt(h.gasMaxMw)}` : ""}`;
     }
-    const w = Math.max(1, t.slots.length), y = a.plot.w / w;
+    const x = Math.max(1, t.slots.length), y = a.plot.w / x;
     let p = null;
     if (t.slot && t.idx !== null) {
       const m = ht(o, t.slot.ms, t.slot.ms + t.stepMs);
       if (m.windMw !== null && m.solarMw !== null && m.residualMw !== null && m.residualMw > 0) {
-        const A = a.plot.x + (t.idx + 0.5) / w * a.plot.w, R = a.yOf(m.windMw + m.solarMw), B = a.yOf(m.windMw + m.solarMw + m.residualMw), j = `Rest ${mt(m.residualMw)}`, I = A + 6 + j.length * 5.6 < a.plot.x + a.plot.w;
-        R - B >= 8 && (p = { x: A, y0: B, y1: R, text: j, tx: I ? A + 6 : A - 6, anchor: I ? "start" : "end" });
+        const A = a.plot.x + (t.idx + 0.5) / x * a.plot.w, R = a.yOf(m.windMw + m.solarMw), B = a.yOf(m.windMw + m.solarMw + m.residualMw), j = `Rest ${mt(m.residualMw)}`, L = A + 6 + j.length * 5.6 < a.plot.x + a.plot.w;
+        R - B >= 8 && (p = { x: A, y0: B, y1: R, text: j, tx: L ? A + 6 : A - 6, anchor: L ? "start" : "end" });
       }
     }
-    const b = x.day === "today" && x.now >= i && x.now < l ? a.xOf(x.now) : null, d = (m) => {
-      const R = m.currentTarget.getBoundingClientRect(), B = (m.clientX - R.left) / R.width * a.width, j = Math.floor((B - a.plot.x) / a.plot.w * w), I = t.slots[j];
-      I && j !== t.idx && x.set({ selectedMs: I.ms });
+    const b = w.day === "today" && w.now >= i && w.now < l ? a.xOf(w.now) : null, d = (m) => {
+      const R = m.currentTarget.getBoundingClientRect(), B = (m.clientX - R.left) / R.width * a.width, j = Math.floor((B - a.plot.x) / a.plot.w * x), L = t.slots[j];
+      L && j !== t.idx && w.set({ selectedMs: L.ms });
     }, M = (m) => {
       m.pointerType === "mouse" && m.button !== 0 || (this.dragging = !0, m.currentTarget.setPointerCapture(m.pointerId), d(m));
     }, v = (m) => this.dragging && d(m), N = () => this.dragging = !1, P = (m, A, R, B = "middle") => S`<text x=${m} y=${A} text-anchor=${B} fill="var(--ink)" font-size="10" font-weight="500" paint-order="stroke" stroke="var(--halo)" stroke-width="3">${R}</text>`;
@@ -1724,7 +1724,7 @@ class Vn extends H {
               <text x=${a.plot.x - 5} y=${m.y + 3.5} text-anchor="end" fill="var(--muted-ink)" font-size="10">${m.label}</text>`
       )}
           <text x=${a.plot.x - 5} y=${a.plot.y - 8} text-anchor="end" fill="var(--muted-ink)" font-size="10">GW</text>
-          ${a.layers.map((m) => S`<path d=${m.path} fill=${Gn[m.key]} />`)}
+          ${a.layers.map((m) => S`<path d=${m.path} fill=${Zn[m.key]} />`)}
           ${a.forecastX !== null ? S`<rect x=${a.forecastX} y=${a.plot.y} width=${a.plot.x + a.plot.w - a.forecastX} height=${a.plot.h} fill="var(--halo)" opacity="0.45" />
               <line x1=${a.forecastX} x2=${a.forecastX} y1=${a.plot.y - 4} y2=${a.plot.y + a.plot.h} stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
               <text x=${a.forecastX + 4} y=${a.plot.y - 6} fill="var(--muted-ink)" font-size="10">Prognose</text>` : g}
@@ -1761,7 +1761,7 @@ class Vn extends H {
   }
 }
 const _e = 9e5, Me = 36e5;
-class qn extends H {
+class Xn extends H {
   constructor() {
     super(...arguments), this.cache = null;
   }
@@ -1780,23 +1780,23 @@ class qn extends H {
   render() {
     const e = this.placeholder();
     if (e) return e;
-    const t = x.home;
+    const t = w.home;
     (this.cache?.today !== t.today || this.cache?.tomorrow !== t.tomorrow) && (this.cache = { today: t.today, tomorrow: t.tomorrow, quarters: [...We(t.today), ...t.tomorrow ? We(t.tomorrow) : []] });
-    const n = this.cache.quarters, o = x.now, r = n.find((p) => p.price !== null && o >= Date.parse(p.ts) && o < Date.parse(p.ts) + _e), i = this.units;
+    const n = this.cache.quarters, o = w.now, r = n.find((p) => p.price !== null && o >= Date.parse(p.ts) && o < Date.parse(p.ts) + _e), i = this.units;
     if (!r || r.price === null) return this.frame(f`<p class="muted small">Noch keine Preise für jetzt.</p>`, "Strompreis");
-    const l = Math.floor(o / _e) * _e, a = n.filter((p) => Date.parse(p.ts) >= l), [c] = cn(a, [3]), h = ae(r.price), u = t.tomorrow ? Date.parse(t.tomorrow.start) : 1 / 0, w = [], y = Date.parse(t.today.start) + t.today.slots * _e;
+    const l = Math.floor(o / _e) * _e, a = n.filter((p) => Date.parse(p.ts) >= l), [c] = un(a, [3]), h = ae(r.price), u = t.tomorrow ? Date.parse(t.tomorrow.start) : 1 / 0, x = [], y = Date.parse(t.today.start) + t.today.slots * _e;
     for (let p = Math.floor(o / Me) * Me; p < y; p += Me) {
       const b = n.filter((d) => d.price !== null && Date.parse(d.ts) >= p && Date.parse(d.ts) < p + Me);
-      b.length && w.push({ ms: p, price: b.reduce((d, M) => d + M.price, 0) / b.length });
+      b.length && x.push({ ms: p, price: b.reduce((d, M) => d + M.price, 0) / b.length });
     }
     return this.frame(f`
       <div class="top">
-        <span class="kicker">${Dt(r.ts)}</span>
-        <span class="level" style="--c: var(--lvl-${h})"><span class="swatch ${h === "negativ" ? "hatch" : ""}"></span>${Wn[h]}</span>
+        <span class="kicker">${Ct(r.ts)}</span>
+        <span class="level" style="--c: var(--lvl-${h})"><span class="swatch ${h === "negativ" ? "hatch" : ""}"></span>${Hn[h]}</span>
       </div>
       <p class="price">${i.price(r.price, r.ts)}</p>
-      ${this.config.show_strip !== !1 && w.length > 1 ? f`<div class="strip" aria-hidden="true">
-              ${w.map((p, b) => f`<span class="cell ${p.price < 0 ? "hatch" : ""} ${b === 0 ? "now" : ""}" style="background: var(--lvl-${ae(p.price)})"></span>`)}
+      ${this.config.show_strip !== !1 && x.length > 1 ? f`<div class="strip" aria-hidden="true">
+              ${x.map((p, b) => f`<span class="cell ${p.price < 0 ? "hatch" : ""} ${b === 0 ? "now" : ""}" style="background: var(--lvl-${ae(p.price)})"></span>`)}
             </div>
             <div class="axis note"><span>jetzt</span><span>24 Uhr</span></div>` : g}
       ${c ? f`<p class="small">
@@ -1860,8 +1860,8 @@ class qn extends H {
     ];
   }
 }
-const Zn = ["", "einer Phase", "zwei Phasen", "drei Phasen", "vier Phasen", "fünf Phasen"];
-class Kn extends H {
+const Yn = ["", "einer Phase", "zwei Phasen", "drei Phasen", "vier Phasen", "fünf Phasen"];
+class Qn extends H {
   static getConfigForm() {
     return { schema: [ye, ce], computeLabel: (e) => he[e.name] };
   }
@@ -1886,11 +1886,11 @@ class Kn extends H {
           ${t.phases.map((r) => {
         const i = t.phase?.index === r.index, l = r.minEurMwh === r.maxEurMwh ? n.price(r.minEurMwh, r.keyHour) : `${n.number(r.minEurMwh, r.fromHour)} bis ${n.number(r.maxEurMwh, r.keyHour)} ${n.suffix}`, a = r.level === "high" ? `Am teuersten um ${r.keyHour} Uhr: ${n.price(r.maxEurMwh, r.keyHour)}` : r.level === "low" ? `Am günstigsten um ${r.keyHour} Uhr: ${n.price(r.minEurMwh, r.keyHour)}` : `Im Schnitt ${n.price(r.avgEurMwh, r.fromHour)}`;
         return f`<li class=${i ? "active" : ""}>
-              <button type="button" class="row link" aria-pressed=${i} @click=${() => x.set({ selectedMs: Date.parse(r.keyTs) })}>
+              <button type="button" class="row link" aria-pressed=${i} @click=${() => w.set({ selectedMs: Date.parse(r.keyTs) })}>
                 <span class="bar" style="background: var(--lvl-${ae(r.avgEurMwh)})"></span>
                 <span class="name">
                   <span class="title">${r.name}${t.nowPhase?.index === r.index ? f` <span class="badge">jetzt</span>` : g}</span>
-                  <span class="note">${St(r)}${r.forecast ? " · Prognose" : ""}</span>
+                  <span class="note">${Et(r)}${r.forecast ? " · Prognose" : ""}</span>
                 </span>
                 <span class="range small">${l}</span>
               </button>
@@ -1901,7 +1901,7 @@ class Kn extends H {
             </li>`;
       })}
         </ol>`,
-      `Der Tag in ${Zn[t.phases.length] ?? `${t.phases.length} Phasen`}`
+      `Der Tag in ${Yn[t.phases.length] ?? `${t.phases.length} Phasen`}`
     );
   }
   static {
@@ -1960,8 +1960,8 @@ class Kn extends H {
     ];
   }
 }
-const Xn = 36e5;
-class Yn extends H {
+const Jn = 36e5;
+class es extends H {
   static getConfigForm() {
     return { schema: [ye, ce], computeLabel: (e) => he[e.name] };
   }
@@ -1977,7 +1977,7 @@ class Yn extends H {
   render() {
     const e = this.placeholder();
     if (e) return e;
-    const t = x.home, n = this.units, o = (i) => i === t.date ? "today" : i === t.yesterday.date ? "yesterday" : i === t.tomorrow?.date ? "tomorrow" : null, r = x.home ? x.day === "today" ? t.date : x.day === "yesterday" ? t.yesterday.date : t.tomorrow?.date : null;
+    const t = w.home, n = this.units, o = (i) => i === t.date ? "today" : i === t.yesterday.date ? "yesterday" : i === t.tomorrow?.date ? "tomorrow" : null, r = w.home ? w.day === "today" ? t.date : w.day === "yesterday" ? t.yesterday.date : t.tomorrow?.date : null;
     return this.frame(
       f`<div class="grid axis">
           <span></span>
@@ -1986,18 +1986,18 @@ class Yn extends H {
         </div>
         <ol>
           ${t.week.map((i) => {
-        const l = o(i.date), a = l === "today" ? "Heute" : l === "tomorrow" ? "Morgen" : _n(i.date), c = Math.max(1, i.hourly.length), h = Mt(i.date).start.getTime(), u = i.window, w = u ? { left: (Date.parse(u.from) - h) / Xn / c * 100, width: u.hours / c * 100 } : null, y = i.hourly.some((b) => b !== null), p = f`<span class="day ${i.date === r ? "current" : ""}">${a}</span>
+        const l = o(i.date), a = l === "today" ? "Heute" : l === "tomorrow" ? "Morgen" : En(i.date), c = Math.max(1, i.hourly.length), h = St(i.date).start.getTime(), u = i.window, x = u ? { left: (Date.parse(u.from) - h) / Jn / c * 100, width: u.hours / c * 100 } : null, y = i.hourly.some((b) => b !== null), p = f`<span class="day ${i.date === r ? "current" : ""}">${a}</span>
               <span class="cells-wrap">
                 <span class="cells">
                   ${i.hourly.map((b) => f`<span class="cell ${b !== null && b < 0 ? "hatch" : ""}" style="background: ${b === null ? "var(--soft)" : `var(--lvl-${ae(b)})`}"></span>`)}
                 </span>
-                ${w ? f`<span class="frame" style="left: ${w.left}%; width: ${w.width}%"></span>` : g}
+                ${x ? f`<span class="frame" style="left: ${x.left}%; width: ${x.width}%"></span>` : g}
               </span>
               <span class="small right">
                 ${u ? f`${G(u.from)}-${G(u.to)} · ${n.number(u.avgEurMwh, u.from)} ${n.unit === "eur_mwh" ? "€/MWh" : "ct"}` : y ? "" : f`<span class="muted">noch keine Preise</span>`}
               </span>`;
         return f`<li class=${i.date === r ? "current" : ""}>
-              ${l ? f`<button type="button" class="grid link" title="Diesen Tag in den anderen Karten zeigen" @click=${() => x.set({ day: l })}>${p}</button>` : f`<div class="grid">${p}</div>`}
+              ${l ? f`<button type="button" class="grid link" title="Diesen Tag in den anderen Karten zeigen" @click=${() => w.set({ day: l })}>${p}</button>` : f`<div class="grid">${p}</div>`}
             </li>`;
       })}
         </ol>
@@ -2086,15 +2086,29 @@ class Yn extends H {
     ];
   }
 }
-const Qn = [
-  { type: "strompreis-now-card", element: qn, name: "Strompreis jetzt", description: "Preis der laufenden Viertelstunde, Preisstufe und die günstigsten 3 Stunden ab jetzt." },
-  { type: "strompreis-day-card", element: Fn, name: "Strompreis Tag", description: "Tagesbild, Preisverlauf mit Phasen und Preisstreifen für gestern, heute und morgen." },
-  { type: "strompreis-phases-card", element: Kn, name: "Strompreis Phasen", description: "Der Tag in Phasen, mit Erklärung zu jeder Phase." },
-  { type: "strompreis-mix-card", element: Vn, name: "Strompreis Woher der Strom kommt", description: "Erzeugung aus Wind, Sonne, Kohle und Gas, der Verbrauch und die Restnachfrage." },
-  { type: "strompreis-hour-card", element: jn, name: "Strompreis Stunde im Detail", description: "Warum der Preis in der gewählten Stunde so ist." },
-  { type: "strompreis-week-card", element: Yn, name: "Strompreis Woche", description: "Die letzten sieben Tage, heute und morgen mit den günstigsten 3 Stunden." }
+const Tt = [
+  { type: "strompreis-now-card", element: Xn, name: "Strompreis jetzt", description: "Preis der laufenden Viertelstunde, Preisstufe und die günstigsten 3 Stunden ab jetzt." },
+  { type: "strompreis-day-card", element: Gn, name: "Strompreis Tag", description: "Tagesbild, Preisverlauf mit Phasen und Preisstreifen für gestern, heute und morgen." },
+  { type: "strompreis-phases-card", element: Qn, name: "Strompreis Phasen", description: "Der Tag in Phasen, mit Erklärung zu jeder Phase." },
+  { type: "strompreis-mix-card", element: Kn, name: "Strompreis Woher der Strom kommt", description: "Erzeugung aus Wind, Sonne, Kohle und Gas, der Verbrauch und die Restnachfrage." },
+  { type: "strompreis-hour-card", element: qn, name: "Strompreis Stunde im Detail", description: "Warum der Preis in der gewählten Stunde so ist." },
+  { type: "strompreis-week-card", element: es, name: "Strompreis Woche", description: "Die letzten sieben Tage, heute und morgen mit den günstigsten 3 Stunden." }
 ];
+function zt() {
+  for (const s of Tt)
+    if (!window.customElements.get(s.type))
+      try {
+        window.customElements.define(s.type, s.element);
+      } catch (e) {
+        console.warn(`strompreis-verstehen: ${s.type} could not be registered`, e);
+      }
+}
 window.customCards ??= [];
-for (const s of Qn)
-  customElements.get(s.type) || customElements.define(s.type, s.element), window.customCards.some((e) => e.type === s.type) || window.customCards.push({ type: s.type, name: s.name, description: s.description, preview: !0, documentationURL: "https://github.com/ehrma/ha-strompreis-verstehen" });
+for (const s of Tt)
+  window.customCards.some((e) => e.type === s.type) || window.customCards.push({ type: s.type, name: s.name, description: s.description, preview: !0, documentationURL: "https://github.com/ehrma/ha-strompreis-verstehen" });
+zt();
+let $t = window.customElements;
+const ts = Date.now(), ns = setInterval(() => {
+  window.customElements !== $t && ($t = window.customElements, zt()), Date.now() - ts > 6e4 && clearInterval(ns);
+}, 50);
 console.info("%c STROMPREIS-VERSTEHEN %c cards loaded ", "background:#f5c518;color:#15181c;font-weight:600", "");
