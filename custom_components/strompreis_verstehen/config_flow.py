@@ -1,4 +1,4 @@
-"""Setup without any input, and the tariff as options (the model of "Mein Tarif" on the website)."""
+"""Setup without any input, and the tariff as options (the model of "Mein Preis" on the website)."""
 
 from __future__ import annotations
 

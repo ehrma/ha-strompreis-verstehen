@@ -15,7 +15,7 @@ SITE_URL: Final = "https://strompreis-verstehen.de"
 
 CONF_API_URL: Final = "api_url"
 
-# Tariff options, the same model as "Mein Tarif" on the website
+# Tariff options, the same model as "Mein Preis" on the website
 CONF_KIND: Final = "kind"
 CONF_BASE_CT: Final = "base_ct"
 CONF_VAT: Final = "vat"

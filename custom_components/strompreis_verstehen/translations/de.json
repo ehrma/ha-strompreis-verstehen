@@ -25,7 +25,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "Mein Tarif",
+        "title": "Mein Preis",
         "description": "Damit „Mein Preis“ stimmt: Beim dynamischen Tarif ist der Aufschlag alles, was zum Börsenpreis dazukommt (Netzentgelt, Steuern, Umlagen, Anbieter), brutto. Beim Tarif mit festen Zeiten (HT/NT) ist es der Arbeitspreis außerhalb der Zeitfenster.",
         "data": {
           "kind": "Tarifart",

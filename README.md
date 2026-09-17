@@ -28,7 +28,7 @@ Beim dynamischen Tarif ist der Aufschlag alles, was zum Börsenpreis dazukommt (
 
 Beim Tarif mit festen Zeiten (HT/NT) gilt der eingetragene Arbeitspreis, der Börsenpreis spielt dann keine Rolle. Unter "Zeitfenster" lassen sich bis zu drei Zeiten mit eigenem Preis eintragen, etwa ein Zeitfenster nach §14a oder der Nachtstrom. Ein Fenster von 22 bis 6 Uhr geht über Mitternacht.
 
-Ohne eingetragenen Tarif rechnet "Mein Preis" mit den Standardwerten der Website (19,69 ct Aufschlag, 19 %).
+Ohne eingetragenen Tarif rechnet "Mein Preis" mit den Standardwerten der Website (19,69 ct Aufschlag, 19 %). Welche Preise in den Karten dem eigenen Tarif folgen und welche beim Börsenpreis bleiben, steht auf der Website unter [So rechnet Mein Preis](https://strompreis-verstehen.de/so-rechnet-mein-preis): mit `unit: mein_preis` zeigen die Karten jeden Preis als Endpreis, nur die Farben der Preisstufen und die Marktbeträge in den Erklärungen bleiben beim Börsenpreis.
 
 ## Entitäten
 

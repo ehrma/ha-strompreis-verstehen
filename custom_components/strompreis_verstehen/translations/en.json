@@ -25,7 +25,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "My tariff",
+        "title": "My price",
         "description": "So that \"My price\" is right: for a dynamic tariff the surcharge is everything added to the exchange price (grid fee, taxes, levies, supplier), gross. For a time-of-use tariff (peak/off-peak) it is the energy price outside the time windows.",
         "data": {
           "kind": "Tariff type",
