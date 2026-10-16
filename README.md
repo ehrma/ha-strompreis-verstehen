@@ -14,11 +14,15 @@ Home Assistant 2026.3 oder neuer.
 
 ## Installation
 
-Über HACS: HACS öffnen, oben rechts im Menü "Benutzerdefinierte Repositories" wählen, `https://github.com/ehrma/ha-strompreis-verstehen` mit dem Typ "Integration" eintragen und "Strompreis verstehen" installieren. Danach Home Assistant neu starten.
+[![In HACS öffnen](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ehrma&repository=ha-strompreis-verstehen&category=integration)
+
+Über HACS: Der Knopf oben öffnet das Repository direkt im eigenen Home Assistant, dort "Herunterladen" wählen. Ohne den Knopf: HACS öffnen, oben rechts im Menü "Benutzerdefinierte Repositories" wählen, `https://github.com/ehrma/ha-strompreis-verstehen` mit dem Typ "Integration" eintragen und "Strompreis verstehen" installieren. Danach Home Assistant neu starten.
 
 Von Hand: den Ordner `custom_components/strompreis_verstehen` aus dem neuesten Release nach `config/custom_components/` kopieren und Home Assistant neu starten.
 
-Anschließend unter Einstellungen, Geräte & Dienste, Integration hinzufügen, nach "Strompreis verstehen" suchen. Die Einrichtung braucht keine Eingaben.
+Anschließend die Integration hinzufügen, mit dem Knopf oder unter Einstellungen, Geräte & Dienste, Integration hinzufügen, nach "Strompreis verstehen" suchen. Die Einrichtung braucht keine Eingaben.
+
+[![Integration hinzufügen](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=strompreis_verstehen)
 
 ## Eigener Tarif
 
@@ -148,4 +152,4 @@ Die Karten werden aus dem Quellcode der Website gebaut und als fertige Datei nac
 
 ## English summary
 
-German day-ahead electricity prices in Home Assistant, per quarter hour, with an explanation of why the price is what it is, from [strompreis-verstehen.de](https://strompreis-verstehen.de). The integration needs no account. It provides sensors for automations (current price, price level, the cheapest three hours, your own end price in €/kWh for the Energy dashboard), two actions (`find_cheapest_window` and `get_prices`) and six dashboard cards that load automatically. Install it through HACS as a custom repository, add it under Settings, Devices & services, and enter your tariff through the gear icon. Entity names and the setup screens are translated into English; the cards and the explanation texts are German only.
+German day-ahead electricity prices in Home Assistant, per quarter hour, with an explanation of why the price is what it is, from [strompreis-verstehen.de](https://strompreis-verstehen.de). The integration needs no account. It provides sensors for automations (current price, price level, the cheapest three hours, your own end price in €/kWh for the Energy dashboard), two actions (`find_cheapest_window` and `get_prices`) and six dashboard cards that load automatically. Install it through HACS as a custom repository (the "Open in HACS" button under Installation does this in one click), add it under Settings, Devices & services, and enter your tariff through the gear icon. Entity names and the setup screens are translated into English; the cards and the explanation texts are German only.
